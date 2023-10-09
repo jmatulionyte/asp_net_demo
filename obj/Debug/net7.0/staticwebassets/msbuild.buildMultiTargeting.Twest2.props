@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../build/Twest2.props" />
+</Project>
