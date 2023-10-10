@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Twest2.Data;
 using Microsoft.AspNetCore.Identity;
-using Twest2.Areas.Identity.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -9,12 +8,7 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString
    ));
 
-//context for user identity
-//builder.Services.AddDbContext<AuthDbContext>(options => options.UseSqlServer(connectionString));
-
-//using diff db context?
-//.AddEntityFrameworkStores<DataContext>(); -> changed to
-//-> .AddEntityFrameworkStores<ApplicationDbContext>(); -> only then works
+//add identity user for identity framework, use database context, disable email confirmation
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
