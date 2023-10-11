@@ -8,9 +8,9 @@
             <hr />
         </div>
         <div class="mb-3">
-            <label asp-for="Name"></label>
-            <input asp-for="Name" class="form-control" />
-            <span asp-validation-for="Name" class="text-danger"></span>
+            <label asp-for="TournamentName"></label>
+            <input asp-for="TournamentName" class="form-control" />
+            <span asp-validation-for="TournamentName" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <label asp-for="AttendeeFirst"></label>
@@ -33,7 +33,6 @@
             <span asp-validation-for="Result" class="text-danger"></span>
         </div>
 
-
         <button type="submit" class="btn btn-primary" style="width:150px">Update</button>
         <a asp-controller="Category" asp-action="Index" class="btn btn-primary" style="width:150px">Back To List</a>
     </div>
@@ -41,6 +40,6 @@
 
 @section Scripts{
     @{
-        <partial name="_ValidationScriptsPartial"/><partial name="_ValidationScriptsPartial"/> //validation for client side if empty fields
+        <partial TournamentName="_ValidationScriptsPartial"/><partial TournamentName="_ValidationScriptsPartial"/> //validation for client side if empty fields
     }
 }

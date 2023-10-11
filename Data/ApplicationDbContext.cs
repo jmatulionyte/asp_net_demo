@@ -18,5 +18,6 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
 	//creates 'Categories' table in DB
 	public DbSet<Category> Categories { get; set; }
 
+
 }
 

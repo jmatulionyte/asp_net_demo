@@ -38,10 +38,10 @@ namespace Twest2.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(Category obj)
         {
-            if (obj.Name == obj.DisplayOrder.ToString())
-            {
-                ModelState.AddModelError("Name", "DisplayOrder cannot match Name");
-            }
+            //if (obj.Name == obj.DisplayOrder.ToString())
+            //{
+            //    ModelState.AddModelError("Name", "DisplayOrder cannot match Name");
+            //}
             if (ModelState.IsValid)
             {
                 _db.Categories.Add(obj);
@@ -75,10 +75,10 @@ namespace Twest2.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Category obj)
         {
-            if (obj.Name == obj.DisplayOrder.ToString())
-            {
-                ModelState.AddModelError("Name", "DisplayOrder cannot match Name");
-            }
+            //if (obj.Name == obj.DisplayOrder.ToString())
+            //{
+            //    ModelState.AddModelError("Name", "DisplayOrder cannot match Name");
+            //}
             if (ModelState.IsValid)
             {
                 _db.Categories.Update(obj);

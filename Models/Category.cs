@@ -11,12 +11,10 @@ namespace Twest2.Models
 		public int Id { get; set; }
 
 		[Required]
+        [DisplayName("Tournament Name")]
+        public string TournamentName { get; set; }
 
-		public string Name { get; set; }
-
-		[DisplayName("Display Order")]
-		[Range(1, 1000, ErrorMessage = "Display order must be between 1 and 1000")]
-		public int DisplayOrder { get; set; }
+		//[Range(1, 1000, ErrorMessage = "Display order must be between 1 and 1000")]
 
         [Required]
         [DisplayName("1st Attendee")]
