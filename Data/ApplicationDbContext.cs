@@ -15,8 +15,9 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
 
 	}
 
-	//creates 'Categories' table in DB
+	//creates table in DB
 	public DbSet<Category> Categories { get; set; }
+    public DbSet<Player> Players { get; set; }
 
 
 }

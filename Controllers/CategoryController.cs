@@ -102,9 +102,6 @@ namespace Twest2.Controllers
                 return NotFound();
             }
             return View(categoryFromDb);
-            //_db.Categories.Remove(categoryFromDb);
-            //_db.SaveChanges();
-            //return RedirectToAction("Index");
         }
 
         //DELETE
