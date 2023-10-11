@@ -109,9 +109,14 @@ namespace Twest2.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
         }
 
-
+        //get Register view
         public async Task OnGetAsync(string returnUrl = null)
         {
+            //if user loggedin, go to base url
+            if (User.Identity.IsAuthenticated)
+            {
+                Response.Redirect("/");
+            }
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
