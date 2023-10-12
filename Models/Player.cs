@@ -16,6 +16,18 @@ namespace Twest2.Models
         [Required]
         [DisplayName("Last Name")]
         public string LastName { get; set; }
+
+        [Required]
+        [DisplayName("Enrolled To Tournament")]
+        public bool EnrolledToTournament { get; set; } = false;
+
+        [Required]
+        [DisplayName("Wins")]
+        public int Wins { get; set; } = 0;
+
+        [Required]
+        [DisplayName("Losses")]
+        public int Losses { get; set; } = 0;
     }
 }
 
