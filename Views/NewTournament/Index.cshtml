@@ -1,0 +1,41 @@
+﻿@model IEnumerable<String>
+@{
+    ViewData["Title"] = "NewTournament";
+}
+
+
+<div class="container p-3">
+    <div class="row pt-2">
+        <div class="col-6">
+            <h2 class="text-primary">
+                Tournament Creation
+            </h2>
+        </div>
+        <div class="col-6 text-end">
+            <a class="btn btn-primary" asp-controller="NewTournament" asp-action="Create">
+                <i class="bi bi-plus-circle"></i> &nbsp; Create Tournament
+            </a>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>
+                        Player
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var obj in Model)
+                {
+                    <tr>
+                        <td width="20%">
+                            @obj
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <br />
+</div>
+
