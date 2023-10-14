@@ -10,9 +10,22 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 200px;
+    width: 100%;
     list-style: none;
     padding: 0;
+}
+.static_spacer {
+    background-color: yellow;
+    height: 100px;
+}
+
+.static_spacer {
+    flex-shrink: 1;
+}
+
+.spacer {
+    background-color: blue;
+    min-height: 20px;
 }
 
 .round .spacer {
@@ -21,11 +34,15 @@ main {
 
 .round .spacer:first-child,
 .round .spacer:last-child {
-    flex-grow: .5;
+    flex-grow: 1;
+}
+
+.game-spacer {
+    background-color: green;
 }
 
 .round .game-spacer {
-    flex-grow: 1;
+    flex-grow: 0.5;
 }
 
 /*
@@ -57,12 +74,13 @@ li.game-top {
 
 li.game-spacer {
     border-right: 1px solid #aaa;
-    min-height: 40px;
+    min-height: 60px;
 }
 
 .empty {
+    background-color: red;
     border-right: 1px solid #FFFFFF;
-    height: 40px;
+    height: 30px;
     flex-grow: 1;
 }
 

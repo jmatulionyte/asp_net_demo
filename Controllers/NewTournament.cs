@@ -22,22 +22,14 @@ namespace Twest2.Controllers
             _db = db;
         }
 
-        //either - drag drop to tables, dropdown to select group or adding additional
+        //all players, grup by group name and return 3 tables
         // GET: /<controller>/
         public IActionResult Index() //show list of players, 1 item - name+surname, take max 20 users from players list
         {
-            //players db - many rows of user info
-            //i need to take first and last name properties
-            //join them
-
             IEnumerable<Player> objPlayersList = _db.Players;
-            //var newTournament = new NewTournament();
-            //var playerList = objPlayersList.Where
-
-            //list of players - item -> name+surname
-            List<string> GroupA = (from player in objPlayersList where player.Group == "A" select player.FirstName + " " + player.LastName).ToList();
-            List<string> GroupB = (from player in objPlayersList where player.Group == "B" select player.FirstName + " " + player.LastName).ToList();
-            List<string> GroupC = (from player in objPlayersList where player.Group == "C" select player.FirstName + " " + player.LastName).ToList();
+            List<string> GroupA = (from player in objPlayersList where player.Group == "A" & player.EnrolledToTournament.ToLower() == "yes" select player.FirstName + " " + player.LastName).ToList();
+            List<string> GroupB = (from player in objPlayersList where player.Group == "B" & player.EnrolledToTournament.ToLower() == "yes" select player.FirstName + " " + player.LastName).ToList();
+            List<string> GroupC = (from player in objPlayersList where player.Group == "C" & player.EnrolledToTournament.ToLower() == "yes" select player.FirstName + " " + player.LastName).ToList();
             List<List<string>> groups = new List<List<string>>
             {
                 GroupA, GroupB, GroupC

@@ -31,7 +31,7 @@
                 <partial name="_ValidationScriptsPartial" />
             }
 
-            <table class="table table-bordered table-striped bg-dark" style="width:20%;margin: 0 50px 0 0;">
+            <table class="table table-striped bg-dark" style="width:20%;margin: 0 50px 0 0;">
                 <thead>
                     <tr>
                         <th>
@@ -44,24 +44,36 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @{
+                    @if (Model[0].Count != 0)
+                    {
                         int counter = 1;
+
+                        @foreach (var member in Model[0])
+                        {
+                            <tr>
+                                <td width="3%">
+                                    @counter
+                                </td>
+                                <td width="20%">
+                                    @member
+                                </td>
+                            </tr>
+                            counter++;
+                        }
                     }
-                    @foreach (var member in Model[0])
+                    else
                     {
                         <tr>
-                            <td width="3%">
-                                @counter
+                            <td>
                             </td>
-                            <td width="20%">
-                                @member
+                            <td>
+                                No enrollments
                             </td>
                         </tr>
-                        counter++;
                     }
                 </tbody>
             </table>
-            <table class="table table-bordered table-striped bg-dark" style="width: 20%; margin: 0 50px 0 0;">
+            <table class="table table-striped bg-dark" style="width: 20%; margin: 0 50px 0 0;">
                 <thead>
                     <tr>
                         <th>
@@ -73,25 +85,37 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @{
-                        counter = 1;
-                    }
-                    @foreach (var member in Model[1])
+                    @if(Model[1].Count != 0)
+                    {
+                        int counter = 1;
+                    
+                        @foreach (var member in Model[1])
+                        {
+                            <tr>
+                                <td width="3%">
+                                    @counter
+                                </td>
+                                <td width="20%">
+                                    @member
+                                </td>
+                            </tr>
+                            counter++;
+                        }
+                    } else
                     {
                         <tr>
-                            <td width="3%">
-                                @counter
+                            <td>
+                        
                             </td>
-                            <td width="20%">
-                                @member
+                            <td>
+                                No enrollments
                             </td>
                         </tr>
-                        counter++;
                     }
 
                 </tbody>
             </table>
-            <table class="table table-bordered table-striped bg-dark" style="width: 20%; margin: 0 50px 0 0;">
+            <table class="table table-striped bg-dark" style="width: 20%; margin: 0 50px 0 0;">
                 <thead>
                     <tr>
                         <th>
@@ -103,20 +127,32 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @{
-                        counter = 1;
+                    @if (Model[2].Count != 0)
+                    {
+                        int counter = 1;
+
+                        @foreach (var member in Model[1])
+                        {
+                            <tr>
+                                <td width="3%">
+                                    @counter
+                                </td>
+                                <td width="20%">
+                                    @member
+                                </td>
+                            </tr>
+                            counter++;
+                        }
                     }
-                    @foreach (var member in Model[2])
+                    else
                     {
                         <tr>
-                            <td width="3%">
-                                @counter
+                            <td>
                             </td>
-                            <td width="20%">
-                                @member
+                            <td>
+                                No enrollments
                             </td>
                         </tr>
-                        counter++;
                     }
 
                 </tbody>
@@ -124,67 +160,134 @@
 
             <br />
         </div>
+        <br />
+        <div class="col-6">
+            <h2 class="text-primary">
+                Group plays
+            </h2>
+        </div>
+        <br />
+
+        <table class="table table-striped bg-dark" style="width:20%;margin: 0 50px 0 0;">
+            <thead>
+                <tr>
+                    <th>
+                        Player 1
+                    </th>
+                    <th>
+                        Player 2
+                    </th>
+                    <th>
+                        Result
+                    </th>
+                    <th>
+
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>               
+                <tr>
+                    <td>
+                        lolrthjhgfghgfghj
+                    </td>
+                    <td>
+                        lol
+                    </td>
+                    <td>
+                        lol
+                    </td>
+                    <td>
+                        <a class="btn btn-primary" asp-controller="" asp-action="">
+                            <i class="bi bi-plus-circle"></i> &nbsp; Edit Result
+                        </a>
+                    </td>
+                </tr>
+                   
+                
+            </tbody>
+        </table>
+
         <div class="container" style="width:100%">
             <h1>2013 NCAA Tournament - Midwest Bracket</h1>
             <main id="tournament">
-                <ul class="round round-1">
-                    <li class="spacer">&nbsp;</li>
-
-                    @*<li class="game game-top winner"></li>
-        <li class="game game-spacer">&nbsp;</li>
-        <li class="game game-bottom "></li>*@
-
-                    @*style="background-color:blue"*@
-
-                    <li>&nbsp;</li>
-                    <li class="empty"></li>
-                    <li>&nbsp;</li>
-
-                    <li class="spacer">&nbsp;</li>
+                <ul class="round">
+                    <li class="static_spacer">&nbsp;</li>
 
                     <li class="game game-top winner">Colo St <span>84</span></li>
                     <li class="game game-spacer"></li>
                     <li class="game game-bottom ">Missouri <span>72</span></li>
 
-                    <li class="spacer">&nbsp;</li>
-
-                    <li class="game game-top ">Oklahoma St <span>55</span></li>
-                    <li class="game game-spacer">&nbsp;</li>
-                    <li class="game game-bottom winner">Oregon <span>68</span></li>
-
-                    <li class="spacer">&nbsp;</li>
+                    <li class="static_spacer">&nbsp;</li>
 
                     <li class="game game-top winner">Saint Louis <span>64</span></li>
                     <li class="game game-spacer">&nbsp;</li>
                     <li class="game game-bottom ">New Mexico St <span>44</span></li>
 
-                    <li class="spacer">&nbsp;</li>
-
-                    <li class="game game-top winner">Memphis <span>54</span></li>
-                    <li class="game game-spacer">&nbsp;</li>
-                    <li class="game game-bottom ">St Mary's <span>52</span></li>
-
-                    <li class="spacer">&nbsp;</li>
+                    <li class="static_spacer">&nbsp;</li>
 
                     <li class="game game-top winner">Mich St <span>65</span></li>
                     <li class="game game-spacer">&nbsp;</li>
                     <li class="game game-bottom ">Valparaiso <span>54</span></li>
 
-                    <li class="spacer">&nbsp;</li>
-
-                    <li class="game game-top winner">Creighton <span>67</span></li>
-                    <li class="game game-spacer">&nbsp;</li>
-                    <li class="game game-bottom ">Cincinnati <span>63</span></li>
-
-                    <li class="spacer">&nbsp;</li>
+                    <li class="static_spacer">&nbsp;</li>
 
                     <li class="game game-top winner">Duke <span>73</span></li>
                     <li class="game game-spacer">&nbsp;</li>
                     <li class="game game-bottom ">Albany <span>61</span></li>
-
-                    <li class="spacer">&nbsp;</li>
                 </ul>
-                <ul class="round round-2">
+                <ul class="round">
+                    <li class="static_spacer">&nbsp;</li>
+
+
+                    <li class="game game-top winner">Colo St <span>84</span></li>
+                    <li class="game game-spacer"></li>
+                    <li class="game game-bottom ">Missouri <span>72</span></li>
+
+                    <li class="static_spacer">&nbsp;</li>
+
+                    <li class="game game-top winner">Saint Louis <span>64</span></li>
+                    <li class="game game-spacer">&nbsp;</li>
+                    <li class="game game-bottom ">New Mexico St <span>44</span></li>
+
+                    <li class="static_spacer">&nbsp;</li>
+
+                    <li class="game game-top winner">Mich St <span>65</span></li>
+                    <li class="game game-spacer">&nbsp;</li>
+                    <li class="game game-bottom ">Valparaiso <span>54</span></li>
+
+                    <li class="static_spacer">&nbsp;</li>
+
+                    <li class="game game-top winner">Duke <span>73</span></li>
+                    <li class="game game-spacer">&nbsp;</li>
+                    <li class="game game-bottom ">Albany <span>61</span></li>
+                </ul>
+                <ul class="round">
+                    <li class="static_spacer">&nbsp;</li>
+
+                    <li class="game game-top winner">Colo St <span>84</span></li>
+                    <li class="game game-spacer"></li>
+                    <li class="game game-bottom ">Missouri <span>72</span></li>
+
+                    <li class="static_spacer">&nbsp;</li>
+
+                    <li class="game game-top winner">Saint Louis <span>64</span></li>
+                    <li class="game game-spacer">&nbsp;</li>
+                    <li class="game game-bottom ">New Mexico St <span>44</span></li>
+
+                    <li class="static_spacer">&nbsp;</li>
+
+                    <li class="game game-top winner">Mich St <span>65</span></li>
+                    <li class="game game-spacer">&nbsp;</li>
+                    <li class="game game-bottom ">Valparaiso <span>54</span></li>
+
+                    <li class="static_spacer">&nbsp;</li>
+
+                    <li class="game game-top winner">Duke <span>73</span></li>
+                    <li class="game game-spacer">&nbsp;</li>
+                    <li class="game game-bottom ">Albany <span>61</span></li>
+                </ul>
+                <ul class="round">
                     <li class="spacer">&nbsp;</li>
 
                     <li class="game game-top winner">Lousville <span>82</span></li>
@@ -211,7 +314,7 @@
 
                     <li class="spacer">&nbsp;</li>
                 </ul>
-                <ul class="round round-3">
+                <ul class="round">
                     <li class="spacer">&nbsp;</li>
 
                     <li class="game game-top winner">Lousville <span>77</span></li>
@@ -226,7 +329,7 @@
 
                     <li class="spacer">&nbsp;</li>
                 </ul>
-                <ul class="round round-4">
+                <ul class="round">
                     <li class="spacer">&nbsp;</li>
 
                     <li class="game game-top winner">Lousville <span>85</span></li>
@@ -234,8 +337,9 @@
                     <li class="game game-bottom ">Duke <span>63</span></li>
 
                     <li class="spacer">&nbsp;</li>
+
                 </ul>
-                <ul class="round round-4">
+                <ul class="round">
                     <li class="game game-top winner">Lousville <span>85</span></li>
                 </ul>
             </main>
