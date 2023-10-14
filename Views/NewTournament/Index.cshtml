@@ -1,41 +1,247 @@
-﻿@model IEnumerable<String>
+﻿@model List<List<string>>
 @{
     ViewData["Title"] = "NewTournament";
 }
+<head>
+    <link rel="stylesheet" href="~/css/tournamentBrackets.css" />
+</head>
+<body>
 
-
-<div class="container p-3">
-    <div class="row pt-2">
-        <div class="col-6">
-            <h2 class="text-primary">
-                Tournament Creation
-            </h2>
-        </div>
-        <div class="col-6 text-end">
-            <a class="btn btn-primary" asp-controller="NewTournament" asp-action="Create">
-                <i class="bi bi-plus-circle"></i> &nbsp; Create Tournament
-            </a>
-        </div>
-        <table>
-            <thead>
-                <tr>
-                    <th>
-                        Player
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var obj in Model)
-                {
-                    <tr>
-                        <td width="20%">
-                            @obj
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
     <br />
-</div>
+    <br />
+    <div class="container">
+        <span style="color:red">
+            TODO:
+            <br />
+            - make _table.cshtml and use it for static count(8) tables
+        </span>
+        <div class="row pt-2">
+            <div class="col-6">
+                <h2 class="text-primary">
+                    Groups
+                </h2>
+            </div>
+            <div class="col-6 text-end">
+                <a class="btn btn-primary" asp-controller="NewTournament" asp-action="Create">
+                    <i class="bi bi-plus-circle"></i> &nbsp; Create Tournament
+                </a>
+            </div>
+
+            @section Scripts {
+                <partial name="_ValidationScriptsPartial" />
+            }
+
+            <table class="table table-bordered table-striped bg-dark" style="width:20%;margin: 0 50px 0 0;">
+                <thead>
+                    <tr>
+                        <th>
+                            Nr
+                        </th>
+                        <th>
+                            Group A
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int counter = 1;
+                    }
+                    @foreach (var member in Model[0])
+                    {
+                        <tr>
+                            <td width="3%">
+                                @counter
+                            </td>
+                            <td width="20%">
+                                @member
+                            </td>
+                        </tr>
+                        counter++;
+                    }
+                </tbody>
+            </table>
+            <table class="table table-bordered table-striped bg-dark" style="width: 20%; margin: 0 50px 0 0;">
+                <thead>
+                    <tr>
+                        <th>
+                            Nr
+                        </th>
+                        <th>
+                            Group B
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        counter = 1;
+                    }
+                    @foreach (var member in Model[1])
+                    {
+                        <tr>
+                            <td width="3%">
+                                @counter
+                            </td>
+                            <td width="20%">
+                                @member
+                            </td>
+                        </tr>
+                        counter++;
+                    }
+
+                </tbody>
+            </table>
+            <table class="table table-bordered table-striped bg-dark" style="width: 20%; margin: 0 50px 0 0;">
+                <thead>
+                    <tr>
+                        <th>
+                            Nr
+                        </th>
+                        <th>
+                            Group C
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        counter = 1;
+                    }
+                    @foreach (var member in Model[2])
+                    {
+                        <tr>
+                            <td width="3%">
+                                @counter
+                            </td>
+                            <td width="20%">
+                                @member
+                            </td>
+                        </tr>
+                        counter++;
+                    }
+
+                </tbody>
+            </table>
+
+            <br />
+        </div>
+        <div class="container" style="width:100%">
+            <h1>2013 NCAA Tournament - Midwest Bracket</h1>
+            <main id="tournament">
+                <ul class="round round-1">
+                    <li class="spacer">&nbsp;</li>
+
+                    @*<li class="game game-top winner"></li>
+        <li class="game game-spacer">&nbsp;</li>
+        <li class="game game-bottom "></li>*@
+
+                    @*style="background-color:blue"*@
+
+                    <li>&nbsp;</li>
+                    <li class="empty"></li>
+                    <li>&nbsp;</li>
+
+                    <li class="spacer">&nbsp;</li>
+
+                    <li class="game game-top winner">Colo St <span>84</span></li>
+                    <li class="game game-spacer"></li>
+                    <li class="game game-bottom ">Missouri <span>72</span></li>
+
+                    <li class="spacer">&nbsp;</li>
+
+                    <li class="game game-top ">Oklahoma St <span>55</span></li>
+                    <li class="game game-spacer">&nbsp;</li>
+                    <li class="game game-bottom winner">Oregon <span>68</span></li>
+
+                    <li class="spacer">&nbsp;</li>
+
+                    <li class="game game-top winner">Saint Louis <span>64</span></li>
+                    <li class="game game-spacer">&nbsp;</li>
+                    <li class="game game-bottom ">New Mexico St <span>44</span></li>
+
+                    <li class="spacer">&nbsp;</li>
+
+                    <li class="game game-top winner">Memphis <span>54</span></li>
+                    <li class="game game-spacer">&nbsp;</li>
+                    <li class="game game-bottom ">St Mary's <span>52</span></li>
+
+                    <li class="spacer">&nbsp;</li>
+
+                    <li class="game game-top winner">Mich St <span>65</span></li>
+                    <li class="game game-spacer">&nbsp;</li>
+                    <li class="game game-bottom ">Valparaiso <span>54</span></li>
+
+                    <li class="spacer">&nbsp;</li>
+
+                    <li class="game game-top winner">Creighton <span>67</span></li>
+                    <li class="game game-spacer">&nbsp;</li>
+                    <li class="game game-bottom ">Cincinnati <span>63</span></li>
+
+                    <li class="spacer">&nbsp;</li>
+
+                    <li class="game game-top winner">Duke <span>73</span></li>
+                    <li class="game game-spacer">&nbsp;</li>
+                    <li class="game game-bottom ">Albany <span>61</span></li>
+
+                    <li class="spacer">&nbsp;</li>
+                </ul>
+                <ul class="round round-2">
+                    <li class="spacer">&nbsp;</li>
+
+                    <li class="game game-top winner">Lousville <span>82</span></li>
+                    <li class="game game-spacer">&nbsp;</li>
+                    <li class="game game-bottom ">Colo St <span>56</span></li>
+
+                    <li class="spacer">&nbsp;</li>
+
+                    <li class="game game-top winner">Oregon <span>74</span></li>
+                    <li class="game game-spacer">&nbsp;</li>
+                    <li class="game game-bottom ">Saint Louis <span>57</span></li>
+
+                    <li class="spacer">&nbsp;</li>
+
+                    <li class="game game-top ">Memphis <span>48</span></li>
+                    <li class="game game-spacer">&nbsp;</li>
+                    <li class="game game-bottom winner">Mich St <span>70</span></li>
+
+                    <li class="spacer">&nbsp;</li>
+
+                    <li class="game game-top ">Creighton <span>50</span></li>
+                    <li class="game game-spacer">&nbsp;</li>
+                    <li class="game game-bottom winner">Duke <span>66</span></li>
+
+                    <li class="spacer">&nbsp;</li>
+                </ul>
+                <ul class="round round-3">
+                    <li class="spacer">&nbsp;</li>
+
+                    <li class="game game-top winner">Lousville <span>77</span></li>
+                    <li class="game game-spacer">&nbsp;</li>
+                    <li class="game game-bottom ">Oregon <span>69</span></li>
+
+                    <li class="spacer">&nbsp;</li>
+
+                    <li class="game game-top ">Mich St <span>61</span></li>
+                    <li class="game game-spacer">&nbsp;</li>
+                    <li class="game game-bottom winner">Duke <span>71</span></li>
+
+                    <li class="spacer">&nbsp;</li>
+                </ul>
+                <ul class="round round-4">
+                    <li class="spacer">&nbsp;</li>
+
+                    <li class="game game-top winner">Lousville <span>85</span></li>
+                    <li class="game game-spacer">&nbsp;</li>
+                    <li class="game game-bottom ">Duke <span>63</span></li>
+
+                    <li class="spacer">&nbsp;</li>
+                </ul>
+                <ul class="round round-4">
+                    <li class="game game-top winner">Lousville <span>85</span></li>
+                </ul>
+            </main>
+
+        </div>
+    </div>
+    
+</body>
 

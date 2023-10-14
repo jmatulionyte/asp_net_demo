@@ -23,9 +23,10 @@ namespace Twest2.Controllers
         // GET: /<controller>/
         public IActionResult Index(string sortOrder, string searchString)
         {
-            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.WinsSortParm = sortOrder == "Wins" ? "wins_desc" : "Wins";
             ViewBag.LossesSortParm = sortOrder == "Losses" ? "losses_desc" : "Losses";
+            ViewBag.EnrollmentSortParm = sortOrder == "Enrollment" ? "enrollment_desc" : "Enrollment";
+            ViewBag.GroupSortParm = sortOrder == "Group" ? "group_desc" : "Group";
 
             IEnumerable<Player> objPlayersList = _db.Players;
 
@@ -37,14 +38,8 @@ namespace Twest2.Controllers
 
             switch (sortOrder)
             {
-                case "name_desc":
-                    objPlayersList = objPlayersList.OrderByDescending(s => s.LastName);
-                    break;
                 case "Wins":
                     objPlayersList = objPlayersList.OrderBy(s => s.Wins);
-                    break;
-                case "wins_desc":
-                    objPlayersList = objPlayersList.OrderByDescending(s => s.Wins);
                     break;
                 case "Losses":
                     objPlayersList = objPlayersList.OrderBy(s => s.Losses);
@@ -52,8 +47,20 @@ namespace Twest2.Controllers
                 case "losses_desc":
                     objPlayersList = objPlayersList.OrderByDescending(s => s.Losses);
                     break;
+                case "Enrollment":
+                    objPlayersList = objPlayersList.OrderBy(s => s.EnrolledToTournament);
+                    break;
+                case "enrollment_desc":
+                    objPlayersList = objPlayersList.OrderByDescending(s => s.EnrolledToTournament);
+                    break;
+                case "Group":
+                    objPlayersList = objPlayersList.OrderBy(s => s.Group);
+                    break;
+                case "group_desc":
+                    objPlayersList = objPlayersList.OrderByDescending(s => s.Group);
+                    break;
                 default:
-                    objPlayersList = objPlayersList.OrderBy(s => s.LastName);
+                    objPlayersList = objPlayersList.OrderByDescending(s => s.Wins);
                     break;
             }
             return View(objPlayersList);

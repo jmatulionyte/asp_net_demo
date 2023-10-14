@@ -38,8 +38,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Remove="Views\Shared\Template.cshtml" />
+    <Content Remove="wwwroot\css\tournamentBrackets.css" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.editorconfig" />
+    <None Include="wwwroot\css\tournamentBrackets.css" />
   </ItemGroup>
 </Project>

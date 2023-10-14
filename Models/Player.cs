@@ -19,7 +19,7 @@ namespace Twest2.Models
 
         [Required]
         [DisplayName("Enrolled To Tournament")]
-        public bool EnrolledToTournament { get; set; } = false;
+        public string EnrolledToTournament { get; set; } = "No";
 
         [Required]
         [DisplayName("Wins")]
@@ -28,6 +28,9 @@ namespace Twest2.Models
         [Required]
         [DisplayName("Losses")]
         public int Losses { get; set; } = 0;
+
+        [DisplayName("Group")]
+        public string Group { get; set; } = "";
     }
 }
 
