@@ -7,11 +7,12 @@
 }
 <body>
     <div class="container">
-        <span style="color:red">
+        @*<span style="color:red">
             TODO:
             <br />
-            - make _table.cshtml and use it for static count(8) tables, and different for group plays
-        </span>
+            - try changing controller/model/view naming
+        </span>*@
+        <br />
         <div class="row pt-2">
             <div class="col-6">
                 <h2 class="text-primary">
@@ -34,6 +35,11 @@
         </div>
         <br />
         <br />
+        <div class="col-6">
+            <h2 class="text-primary">
+                Group Plays
+            </h2>
+        </div>
         <div class="row pt-3">
             @{ ViewData["GroupName"] = "A";}
             <partial name="_TableGroupPlaysPartial" model="Model.groupAPlays" view-data="ViewData" />
@@ -42,6 +48,7 @@
             @{ ViewData["GroupName"] = "C";}
             <partial name="_TableGroupPlaysPartial" model="Model.groupCPlays" view-data="ViewData" />
         </div>
+    </div>
 </body>
 
 

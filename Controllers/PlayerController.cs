@@ -23,46 +23,14 @@ namespace Twest2.Controllers
         // GET: /<controller>/
         public IActionResult Index(string sortOrder, string searchString)
         {
+            var helperClass = new HelperClass(_db);
+
             ViewBag.WinsSortParm = sortOrder == "Wins" ? "wins_desc" : "Wins";
             ViewBag.LossesSortParm = sortOrder == "Losses" ? "losses_desc" : "Losses";
             ViewBag.EnrollmentSortParm = sortOrder == "Enrollment" ? "enrollment_desc" : "Enrollment";
             ViewBag.GroupSortParm = sortOrder == "Group" ? "group_desc" : "Group";
 
-            IEnumerable<Player> objPlayersList = _db.Players;
-
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                objPlayersList = objPlayersList.Where(s => s.LastName.Contains(searchString)
-                                       || s.FirstName.Contains(searchString));
-            }
-
-            switch (sortOrder)
-            {
-                case "Wins":
-                    objPlayersList = objPlayersList.OrderBy(s => s.Wins);
-                    break;
-                case "Losses":
-                    objPlayersList = objPlayersList.OrderBy(s => s.Losses);
-                    break;
-                case "losses_desc":
-                    objPlayersList = objPlayersList.OrderByDescending(s => s.Losses);
-                    break;
-                case "Enrollment":
-                    objPlayersList = objPlayersList.OrderBy(s => s.EnrolledToTournament);
-                    break;
-                case "enrollment_desc":
-                    objPlayersList = objPlayersList.OrderByDescending(s => s.EnrolledToTournament);
-                    break;
-                case "Group":
-                    objPlayersList = objPlayersList.OrderBy(s => s.Group);
-                    break;
-                case "group_desc":
-                    objPlayersList = objPlayersList.OrderByDescending(s => s.Group);
-                    break;
-                default:
-                    objPlayersList = objPlayersList.OrderByDescending(s => s.Wins);
-                    break;
-            }
+            IEnumerable<Player> objPlayersList = helperClass.HandleAllPlayersSorting(sortOrder, searchString);
             return View(objPlayersList);
         }
 

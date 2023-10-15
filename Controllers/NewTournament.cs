@@ -27,11 +27,11 @@ namespace Twest2.Controllers
         // GET: /<controller>/
         public IActionResult Index() //show list of players, 1 item - name+surname, take max 20 users from players list
         {
-            var helperClass = new HelperClass();
-            List<List<string>> groupsABC = helperClass.SortPlayersToGroups(_db);
-            List<List<string>> groupAPlays = helperClass.CreateSingleGroupPlays(_db, groupsABC[0]);
-            List<List<string>> groupBPlays = helperClass.CreateSingleGroupPlays(_db, groupsABC[1]);
-            List<List<string>> groupCPlays = helperClass.CreateSingleGroupPlays(_db, groupsABC[2]);
+            var helperClass = new HelperClass(_db);
+            List<List<string>> groupsABC = helperClass.SortPlayersToGroups();
+            List<List<string>> groupAPlays = helperClass.CreateSingleGroupPlays(groupsABC[0]);
+            List<List<string>> groupBPlays = helperClass.CreateSingleGroupPlays(groupsABC[1]);
+            List<List<string>> groupCPlays = helperClass.CreateSingleGroupPlays(groupsABC[2]);
             var model = new TournamentViewModel();
             model.groupsABC = groupsABC;
             model.groupAPlays = groupAPlays;
