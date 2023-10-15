@@ -17,10 +17,8 @@ namespace Twest2.Models
         [DisplayName("Last Name")]
         public string LastName { get; set; }
 
-        [Range(1, 1000, ErrorMessage = "Display order must be between 1 and 1000")]
-
         [Required]
-        [RegularExpression("yes||no", ErrorMessage = "Value can be eityher 'Yes' or 'No'")]
+        [RegularExpression(@"^(Yes||No)$", ErrorMessage = "Enrollment value can be either 'Yes' or 'No'")]
         [DisplayName("Enrolled To Tournament")]
         public string EnrolledToTournament { get; set; } = "No";
 
@@ -32,6 +30,7 @@ namespace Twest2.Models
         [DisplayName("Losses")]
         public int Losses { get; set; } = 0;
 
+        [RegularExpression(@"^(A||B||C)$", ErrorMessage = "Group value can be either 'A', 'B' or 'C'")]
         [DisplayName("Group")]
         public string Group { get; set; } = "";
     }
