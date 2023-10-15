@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis;
 using Twest2.Data;
+using Twest2.Controllers;
 using Twest2.Models;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -26,15 +27,17 @@ namespace Twest2.Controllers
         // GET: /<controller>/
         public IActionResult Index() //show list of players, 1 item - name+surname, take max 20 users from players list
         {
-            IEnumerable<Player> objPlayersList = _db.Players;
-            List<string> GroupA = (from player in objPlayersList where player.Group == "A" & player.EnrolledToTournament.ToLower() == "yes" select player.FirstName + " " + player.LastName).ToList();
-            List<string> GroupB = (from player in objPlayersList where player.Group == "B" & player.EnrolledToTournament.ToLower() == "yes" select player.FirstName + " " + player.LastName).ToList();
-            List<string> GroupC = (from player in objPlayersList where player.Group == "C" & player.EnrolledToTournament.ToLower() == "yes" select player.FirstName + " " + player.LastName).ToList();
-            List<List<string>> groups = new List<List<string>>
-            {
-                GroupA, GroupB, GroupC
-            };
-            return View(groups);
+            var helperClass = new HelperClass();
+            List<List<string>> groupsABC = helperClass.SortPlayersToGroups(_db);
+            List<List<string>> groupAPlays = helperClass.CreateSingleGroupPlays(_db, groupsABC[0]);
+            List<List<string>> groupBPlays = helperClass.CreateSingleGroupPlays(_db, groupsABC[1]);
+            List<List<string>> groupCPlays = helperClass.CreateSingleGroupPlays(_db, groupsABC[2]);
+            var model = new TournamentViewModel();
+            model.groupsABC = groupsABC;
+            model.groupAPlays = groupAPlays;
+            model.groupBPlays = groupBPlays;
+            model.groupCPlays = groupCPlays;
+            return View(model);
         }
 
         //public IActionResult GroupDropdown()

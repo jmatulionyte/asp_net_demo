@@ -1,19 +1,16 @@
-﻿@model List<List<string>>
+﻿@using Twest2.Models
+
+@model TournamentViewModel
+
 @{
     ViewData["Title"] = "NewTournament";
 }
-<head>
-    <link rel="stylesheet" href="~/css/tournamentBrackets.css" />
-</head>
 <body>
-
-    <br />
-    <br />
     <div class="container">
         <span style="color:red">
             TODO:
             <br />
-            - make _table.cshtml and use it for static count(8) tables
+            - make _table.cshtml and use it for static count(8) tables, and different for group plays
         </span>
         <div class="row pt-2">
             <div class="col-6">
@@ -44,14 +41,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if (Model[0].Count != 0)
+                    @if (Model.groupsABC[0].Count != 0)
                     {
                         int counter = 1;
 
-                        @foreach (var member in Model[0])
+                        @foreach (var member in Model.groupsABC[0])
                         {
                             <tr>
-                                <td width="3%">
+                                <td width="1%">
                                     @counter
                                 </td>
                                 <td width="20%">
@@ -85,11 +82,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if(Model[1].Count != 0)
+                    @if (Model.groupsABC[1].Count != 0)
                     {
                         int counter = 1;
-                    
-                        @foreach (var member in Model[1])
+
+                        @foreach (var member in Model.groupsABC[1])
                         {
                             <tr>
                                 <td width="3%">
@@ -101,11 +98,11 @@
                             </tr>
                             counter++;
                         }
-                    } else
+                    }
+                    else
                     {
                         <tr>
                             <td>
-                        
                             </td>
                             <td>
                                 No enrollments
@@ -127,11 +124,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if (Model[2].Count != 0)
+                    @if (Model.groupsABC[2].Count != 0)
                     {
                         int counter = 1;
 
-                        @foreach (var member in Model[1])
+                        @foreach (var member in Model.groupsABC[2])
                         {
                             <tr>
                                 <td width="3%">
@@ -161,191 +158,178 @@
             <br />
         </div>
         <br />
+        <br />
+        <br />
         <div class="col-6">
             <h2 class="text-primary">
                 Group plays
             </h2>
         </div>
         <br />
+        @if (Model.groupAPlays.Count != 0)
+        {
+            <h4 class="text-primary">
+                Group A
+            </h4>
+            <table class="table table-striped bg-dark" style="width: 50%; margin: 0 50px 0 0;">
+                <thead>
+                    <tr>
+                        <th>
+                            Nr
+                        </th>
+                        <th>
+                            Player 1
+                        </th>
+                        <th>
+                            Player 2
+                        </th>
+                        <th>
+                            Result
+                        </th>
+                        <th>
 
-        <table class="table table-striped bg-dark" style="width:20%;margin: 0 50px 0 0;">
-            <thead>
-                <tr>
-                    <th>
-                        Player 1
-                    </th>
-                    <th>
-                        Player 2
-                    </th>
-                    <th>
-                        Result
-                    </th>
-                    <th>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{int counter = 1;}
+                    @foreach (var player in Model.groupAPlays)
+                    {
+                        <tr>
+                            <td>
+                                @counter
+                            </td>
+                            <td>
+                                @player[0]
+                            </td>
+                            <td>
+                                @player[1]
+                            </td>
+                            <td>
+                                0:0
+                            </td>
+                            <td>
+                                <a class="btn btn-primary" asp-controller="" asp-action="">
+                                    <i class="bi bi-plus-circle"></i> &nbsp; Edit Result
+                                </a>
+                            </td>
+                        </tr>
+                        counter++;
 
-                    </th>
+                    }
+                </tbody>
+            </table>
+        }
+        <br />
+        @if (Model.groupBPlays.Count != 0)
+        {
+            <h4 class="text-primary">
+                Group B
+            </h4>
+            <table class="table table-striped bg-dark" style="width: 50%; margin: 0 50px 0 0;">
+                <thead>
+                    <tr>
+                        <th>
+                            Nr
+                        </th>
+                        <th>
+                            Player 1
+                        </th>
+                        <th>
+                            Player 2
+                        </th>
+                        <th>
+                            Result
+                        </th>
+                        <th>
 
-                </tr>
-            </thead>
-            <tbody>               
-                <tr>
-                    <td>
-                        lolrthjhgfghgfghj
-                    </td>
-                    <td>
-                        lol
-                    </td>
-                    <td>
-                        lol
-                    </td>
-                    <td>
-                        <a class="btn btn-primary" asp-controller="" asp-action="">
-                            <i class="bi bi-plus-circle"></i> &nbsp; Edit Result
-                        </a>
-                    </td>
-                </tr>
-                   
-                
-            </tbody>
-        </table>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{int counter = 1;}
+                    @foreach (var player in Model.groupBPlays)
+                    {
+                        <tr>
+                            <td>
+                                @counter
+                            </td>
+                            <td>
+                                @player[0]
+                            </td>
+                            <td>
+                                @player[1]
+                            </td>
+                            <td>
+                                0:0
+                            </td>
+                            <td>
+                                <a class="btn btn-primary" asp-controller="" asp-action="">
+                                    <i class="bi bi-plus-circle"></i> &nbsp; Edit Result
+                                </a>
+                            </td>
+                        </tr>
+                        counter++;
+                    }
+                </tbody>
+            </table>
+        }
+        <br />
+        @if (Model.groupCPlays.Count != 0)
+        {
+            <h4 class="text-primary">
+                Group C
+            </h4>
+            <table class="table table-striped bg-dark" style="width: 50%; margin: 0 50px 0 0;">
+                <thead>
+                    <tr>
+                        <th>
+                            Nr
+                        </th>
+                        <th>
+                            Player 1
+                        </th>
+                        <th>
+                            Player 2
+                        </th>
+                        <th>
+                            Result
+                        </th>
+                        <th>
 
-        <div class="container" style="width:100%">
-            <h1>2013 NCAA Tournament - Midwest Bracket</h1>
-            <main id="tournament">
-                <ul class="round">
-                    <li class="static_spacer">&nbsp;</li>
-
-                    <li class="game game-top winner">Colo St <span>84</span></li>
-                    <li class="game game-spacer"></li>
-                    <li class="game game-bottom ">Missouri <span>72</span></li>
-
-                    <li class="static_spacer">&nbsp;</li>
-
-                    <li class="game game-top winner">Saint Louis <span>64</span></li>
-                    <li class="game game-spacer">&nbsp;</li>
-                    <li class="game game-bottom ">New Mexico St <span>44</span></li>
-
-                    <li class="static_spacer">&nbsp;</li>
-
-                    <li class="game game-top winner">Mich St <span>65</span></li>
-                    <li class="game game-spacer">&nbsp;</li>
-                    <li class="game game-bottom ">Valparaiso <span>54</span></li>
-
-                    <li class="static_spacer">&nbsp;</li>
-
-                    <li class="game game-top winner">Duke <span>73</span></li>
-                    <li class="game game-spacer">&nbsp;</li>
-                    <li class="game game-bottom ">Albany <span>61</span></li>
-                </ul>
-                <ul class="round">
-                    <li class="static_spacer">&nbsp;</li>
-
-
-                    <li class="game game-top winner">Colo St <span>84</span></li>
-                    <li class="game game-spacer"></li>
-                    <li class="game game-bottom ">Missouri <span>72</span></li>
-
-                    <li class="static_spacer">&nbsp;</li>
-
-                    <li class="game game-top winner">Saint Louis <span>64</span></li>
-                    <li class="game game-spacer">&nbsp;</li>
-                    <li class="game game-bottom ">New Mexico St <span>44</span></li>
-
-                    <li class="static_spacer">&nbsp;</li>
-
-                    <li class="game game-top winner">Mich St <span>65</span></li>
-                    <li class="game game-spacer">&nbsp;</li>
-                    <li class="game game-bottom ">Valparaiso <span>54</span></li>
-
-                    <li class="static_spacer">&nbsp;</li>
-
-                    <li class="game game-top winner">Duke <span>73</span></li>
-                    <li class="game game-spacer">&nbsp;</li>
-                    <li class="game game-bottom ">Albany <span>61</span></li>
-                </ul>
-                <ul class="round">
-                    <li class="static_spacer">&nbsp;</li>
-
-                    <li class="game game-top winner">Colo St <span>84</span></li>
-                    <li class="game game-spacer"></li>
-                    <li class="game game-bottom ">Missouri <span>72</span></li>
-
-                    <li class="static_spacer">&nbsp;</li>
-
-                    <li class="game game-top winner">Saint Louis <span>64</span></li>
-                    <li class="game game-spacer">&nbsp;</li>
-                    <li class="game game-bottom ">New Mexico St <span>44</span></li>
-
-                    <li class="static_spacer">&nbsp;</li>
-
-                    <li class="game game-top winner">Mich St <span>65</span></li>
-                    <li class="game game-spacer">&nbsp;</li>
-                    <li class="game game-bottom ">Valparaiso <span>54</span></li>
-
-                    <li class="static_spacer">&nbsp;</li>
-
-                    <li class="game game-top winner">Duke <span>73</span></li>
-                    <li class="game game-spacer">&nbsp;</li>
-                    <li class="game game-bottom ">Albany <span>61</span></li>
-                </ul>
-                <ul class="round">
-                    <li class="spacer">&nbsp;</li>
-
-                    <li class="game game-top winner">Lousville <span>82</span></li>
-                    <li class="game game-spacer">&nbsp;</li>
-                    <li class="game game-bottom ">Colo St <span>56</span></li>
-
-                    <li class="spacer">&nbsp;</li>
-
-                    <li class="game game-top winner">Oregon <span>74</span></li>
-                    <li class="game game-spacer">&nbsp;</li>
-                    <li class="game game-bottom ">Saint Louis <span>57</span></li>
-
-                    <li class="spacer">&nbsp;</li>
-
-                    <li class="game game-top ">Memphis <span>48</span></li>
-                    <li class="game game-spacer">&nbsp;</li>
-                    <li class="game game-bottom winner">Mich St <span>70</span></li>
-
-                    <li class="spacer">&nbsp;</li>
-
-                    <li class="game game-top ">Creighton <span>50</span></li>
-                    <li class="game game-spacer">&nbsp;</li>
-                    <li class="game game-bottom winner">Duke <span>66</span></li>
-
-                    <li class="spacer">&nbsp;</li>
-                </ul>
-                <ul class="round">
-                    <li class="spacer">&nbsp;</li>
-
-                    <li class="game game-top winner">Lousville <span>77</span></li>
-                    <li class="game game-spacer">&nbsp;</li>
-                    <li class="game game-bottom ">Oregon <span>69</span></li>
-
-                    <li class="spacer">&nbsp;</li>
-
-                    <li class="game game-top ">Mich St <span>61</span></li>
-                    <li class="game game-spacer">&nbsp;</li>
-                    <li class="game game-bottom winner">Duke <span>71</span></li>
-
-                    <li class="spacer">&nbsp;</li>
-                </ul>
-                <ul class="round">
-                    <li class="spacer">&nbsp;</li>
-
-                    <li class="game game-top winner">Lousville <span>85</span></li>
-                    <li class="game game-spacer">&nbsp;</li>
-                    <li class="game game-bottom ">Duke <span>63</span></li>
-
-                    <li class="spacer">&nbsp;</li>
-
-                </ul>
-                <ul class="round">
-                    <li class="game game-top winner">Lousville <span>85</span></li>
-                </ul>
-            </main>
-
-        </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ int counter = 1;}
+                    @foreach (var player in Model.groupCPlays)
+                    {
+                        <tr>
+                            <td>
+                                @counter
+                            </td>
+                            <td>
+                                @player[0]
+                            </td>
+                            <td>
+                                @player[1]
+                            </td>
+                            <td>
+                                0:0
+                            </td>
+                            <td>
+                                <a class="btn btn-primary" asp-controller="" asp-action="">
+                                    <i class="bi bi-plus-circle"></i> &nbsp; Edit Result
+                                </a>
+                            </td>
+                        </tr>
+                        counter++;
+                    }
+                </tbody>
+            </table>
+        }
     </div>
-    
+
 </body>
+
 
