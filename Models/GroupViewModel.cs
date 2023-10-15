@@ -1,7 +1,7 @@
 ﻿using System;
 namespace Twest2.Models
 {
-	public class TournamentViewModel
+	public class GroupViewModel
 	{
         public List<List<string>> groupsABC { get; set; }
 

@@ -1,0 +1,62 @@
+﻿@using Twest2.Models
+
+@model GroupViewModel
+
+@{
+    ViewData["Title"] = "Group";
+}
+<body>
+    <div class="container">
+        <span style="color:red">
+            TODO:
+            <br />
+            - how to pass group data to field and re use it in other method instead of database?
+            - describe methos more
+        </span>
+        <br />
+        <div class="row pt-2">
+            <div class="col-6">
+                <h2 class="text-primary">
+                    Groups
+                </h2>
+            </div>
+            <div class="col-6 text-end">
+                <a class="btn btn-primary" asp-controller="Group" asp-action="Index" asp-route-createGroupPlays=true>
+                    <i class="bi bi-plus-circle"></i> &nbsp; Start Group Plays
+                </a>
+            </div>
+
+            @{ ViewData["GroupName"] = "A";}
+            <partial name="_TableGroupPartial" model="Model.groupsABC[0]" view-data="ViewData" />
+            @{ ViewData["GroupName"] = "B";}
+            <partial name="_TableGroupPartial" model="Model.groupsABC[1]" view-data="ViewData" />
+            @{ ViewData["GroupName"] = "C";}
+            <partial name="_TableGroupPartial" model="Model.groupsABC[2]" view-data="ViewData" />
+
+        </div>
+        <br />
+        <br />
+        @if (Model.groupAPlays != null)
+        {
+            <div class="col-6">
+                <h2 class="text-primary">
+                    Group Plays
+                </h2>
+            </div>
+            <div class="row pt-3">
+                @{ ViewData["GroupName"] = "A";}
+                <partial name="_TableGroupPlaysPartial" model="Model.groupAPlays" view-data="ViewData" />
+                @{ ViewData["GroupName"] = "B";}
+                <partial name="_TableGroupPlaysPartial" model="Model.groupBPlays" view-data="ViewData" />
+                @{ ViewData["GroupName"] = "C";}
+                <partial name="_TableGroupPlaysPartial" model="Model.groupCPlays" view-data="ViewData" />
+            </div>
+        }
+        
+    </div>
+</body>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
