@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.Data.SqlClient;
-using NuGet.Packaging;
-using Twest2.Data;
+﻿using Twest2.Data;
 using Twest2.Models;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Twest2.Helpers
 {
@@ -29,7 +24,7 @@ namespace Twest2.Helpers
             };
             return groups;
         }
-
+        
         public List<List<string>> CreateSingleGroupPlays(List<string> singleGroup)
         {
             List<List<string>> groupPlays = new List<List<string>>();
@@ -51,44 +46,22 @@ namespace Twest2.Helpers
             return groupPlays;
         }
 
-        public IEnumerable<Player> HandleAllPlayersSorting(string sortOrder, string searchString)
+        public void UpdateTournamentDbStartTime()
         {
-            IEnumerable<Player> objPlayersList = _db.Players;
+            DateTime currentDateTime = DateTime.Now;
+            var tournamentObj = new Tournament(currentDateTime, new DateTime());
+            _db.Tournaments.Add(tournamentObj);
+            _db.SaveChanges();
+            return;
+        }
 
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                objPlayersList = objPlayersList.Where(s => s.LastName.Contains(searchString)
-                                       || s.FirstName.Contains(searchString));
-            }
+        public bool checkIfTournamentStarted()
+        {
+            IEnumerable<Tournament> objTournamentList = _db.Tournaments;
+            //check if creation data is not equal to default data and end date is default date -> this means that tournament started but is not yet finished
+            bool tournamentStarted = objTournamentList.Any(x => x.TournamentCreationDate != new DateTime() && x.TournamentEndDate == new DateTime());
+            return tournamentStarted;
 
-            switch (sortOrder)
-            {
-                case "Wins":
-                    objPlayersList = objPlayersList.OrderBy(s => s.Wins);
-                    break;
-                case "Losses":
-                    objPlayersList = objPlayersList.OrderBy(s => s.Losses);
-                    break;
-                case "losses_desc":
-                    objPlayersList = objPlayersList.OrderByDescending(s => s.Losses);
-                    break;
-                case "Enrollment":
-                    objPlayersList = objPlayersList.OrderBy(s => s.EnrolledToTournament);
-                    break;
-                case "enrollment_desc":
-                    objPlayersList = objPlayersList.OrderByDescending(s => s.EnrolledToTournament);
-                    break;
-                case "Group":
-                    objPlayersList = objPlayersList.OrderBy(s => s.Group);
-                    break;
-                case "group_desc":
-                    objPlayersList = objPlayersList.OrderByDescending(s => s.Group);
-                    break;
-                default:
-                    objPlayersList = objPlayersList.OrderByDescending(s => s.Wins);
-                    break;
-            }
-            return objPlayersList;
         }
     }
 }

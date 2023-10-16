@@ -6,6 +6,13 @@ namespace Twest2.Models
 {
 	public class Tournament
     {
+        public Tournament(DateTime tournamentCreationDate, DateTime tournamentEndDate)
+        {
+            TournamentCreationDate = tournamentCreationDate;
+            TournamentEndDate = tournamentEndDate;
+
+        }
+
         [Key]
         public int Id { get; set; }
 
@@ -13,21 +20,23 @@ namespace Twest2.Models
 
         public DateTime TournamentEndDate { get; set; }
 
-        public int Place1 { get; set; }
+        public string Place1 { get; set; } = "";
 
-        public int Place2 { get; set; }
+        public string Place2 { get; set; } = "";
 
-        public int Place3 { get; set; }
+        public string Place3 { get; set; } = "";
 
-        public int Place4 { get; set; }
+        public string Place4 { get; set; } = "";
 
-        public int Place5 { get; set; }
+        public string Place5 { get; set; } = "";
 
-        public int Place6 { get; set; }
+        public string Place6 { get; set; } = "";
 
-        public int Place7 { get; set; }
+        public string Place7 { get; set; } = "";
 
-        public int Place8 { get; set; }
+        public string Place8 { get; set; } = "";
+
+
 
     }
 }
