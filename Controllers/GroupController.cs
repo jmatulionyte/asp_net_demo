@@ -23,23 +23,24 @@ namespace Twest2.Controllers
         {
             var helperGroup = new HelperGroup(_db);
             List<List<string>> groupsABC = helperGroup.SortPlayersToGroups();
-            var groupViewModel = new GroupViewModel();
+            GroupViewModel groupViewModel = new GroupViewModel();
             groupViewModel.groupsABC = groupsABC;
-            bool tournamentStartedAlready = helperGroup.checkIfTournamentStarted();
-            if (createGroupPlays || tournamentStartedAlready)
+            bool tournamentStartedAlready = helperGroup.checkIfTournamentOngoing();
+
+            if (createGroupPlays && !tournamentStartedAlready)
             {
-                List<List<string>> groupAPlays = helperGroup.CreateSingleGroupPlays(groupsABC[0]);
-                List<List<string>> groupBPlays = helperGroup.CreateSingleGroupPlays(groupsABC[1]);
-                List<List<string>> groupCPlays = helperGroup.CreateSingleGroupPlays(groupsABC[2]);
-                groupViewModel.groupAPlays = groupAPlays;
-                groupViewModel.groupBPlays = groupBPlays;
-                groupViewModel.groupCPlays = groupCPlays;
-
-                //fill db for tournament creation time - so that group plays would be visible  in new session
-                helperGroup.UpdateTournamentDbStartTime();
-                //fill db with group play items - so that group plays data persist in new session
+                helperGroup.updateGroupTournamentDB(groupsABC);
+                groupViewModel.GroupPlaysStarted = true;
+                //recheck tournament status if view needs to be updated
+                tournamentStartedAlready = helperGroup.checkIfTournamentOngoing();
             }
-
+            if (tournamentStartedAlready)
+            {
+                //get groupPlays tables
+                groupViewModel = helperGroup.sortGroupPlaysByGroupName(groupViewModel);
+                //add group plays to database
+                //helperGroup.CreateGroupDbPlays(groupViewModel);
+            }
             return View(groupViewModel);
         }
 

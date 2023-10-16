@@ -1,4 +1,4 @@
-﻿@using Twest2.Models
+﻿@using Twest2.Helpers
 
 @model GroupViewModel
 
@@ -12,6 +12,8 @@
             <br />
             - how to pass group data to field and re use it in other method instead of database?
             <br />
+            - cache database!!!!!!
+            <br />
             - describe methos more
             <br />
             - add method which would stop tournamen tand hide group plays
@@ -24,10 +26,23 @@
                 </h2>
             </div>
             <div class="col-6 text-end">
-                <a class="btn btn-primary" asp-controller="Group" asp-action="Index" asp-route-createGroupPlays=true>
-                    <i class="bi bi-plus-circle"></i> &nbsp; Start Group Plays
-                </a>
+                @if (Model.GroupPlaysStarted)
+                {
+                    <button class="btn btn-secondary" style="background-color: #D0D0D0 " disabled>
+                        <i class="bi bi-plus-circle"></i> &nbsp; Start Group Plays
+                    </button>
+                }
+                else
+                {
+                    <a class="btn btn-primary" asp-controller="Group" asp-action="Index" asp-route-createGroupPlays=true>
+                        <i class="bi bi-plus-circle"></i> &nbsp; Start Group Plays
+                    </a>
+                }
+
             </div>
+            <br />
+            <br />
+            <br />
 
             @{ ViewData["GroupName"] = "A";}
             <partial name="_TableGroupPartial" model="Model.groupsABC[0]" view-data="ViewData" />
