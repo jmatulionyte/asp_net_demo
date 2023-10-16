@@ -6,17 +6,18 @@ using Twest2.Data;
 using Twest2.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Twest2.Controllers
+namespace Twest2.Helpers
 {
-	public class HelperClass
+	public class HelperPlayer
 	{
         private readonly ApplicationDbContext _db;
 
-        public HelperClass(ApplicationDbContext db)
+        public HelperPlayer(ApplicationDbContext db)
         {
             _db = db;
         }
 
+        //goup
         public List<List<string>> SortPlayersToGroups()
 		{
             IEnumerable<Player> objPlayersList = _db.Players;
@@ -29,7 +30,7 @@ namespace Twest2.Controllers
             };
             return groups;
         }
-
+        //group
         public List<List<string>> CreateSingleGroupPlays(List<string> singleGroup)
         {
             List<List<string>> groupPlays = new List<List<string>>();
@@ -51,6 +52,7 @@ namespace Twest2.Controllers
             return groupPlays;
         }
 
+        //player
         public IEnumerable<Player> HandleAllPlayersSorting(string sortOrder, string searchString)
         {
             IEnumerable<Player> objPlayersList = _db.Players;

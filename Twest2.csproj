@@ -13,12 +13,14 @@
     <None Remove="Areas\Identity\Data\" />
     <None Remove="Views\Player\" />
     <None Remove="Views\Playoffs\" />
+    <None Remove="Helpers\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
     <Folder Include="Areas\Identity\Data\" />
     <Folder Include="Views\Player\" />
     <Folder Include="Views\Playoffs\" />
+    <Folder Include="Helpers\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.11" />

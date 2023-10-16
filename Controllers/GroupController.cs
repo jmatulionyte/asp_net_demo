@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.CodeAnalysis;
+﻿using Microsoft.AspNetCore.Mvc;
 using Twest2.Data;
-using Twest2.Controllers;
 using Twest2.Models;
+using Twest2.Helpers;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -41,18 +34,22 @@ namespace Twest2.Controllers
         //GET
         public IActionResult Index(bool createGroupPlays = false)
         {
-            var helperClass = new HelperClass(_db);
-            List<List<string>> groupsABC = helperClass.SortPlayersToGroups();
+            var helperGroup = new HelperGroup(_db);
+            List<List<string>> groupsABC = helperGroup.SortPlayersToGroups();
             var _groupViewModel = new GroupViewModel();
             _groupViewModel.groupsABC = groupsABC;
             if (createGroupPlays)
             {
-                List<List<string>> groupAPlays = helperClass.CreateSingleGroupPlays(groupsABC[0]);
-                List<List<string>> groupBPlays = helperClass.CreateSingleGroupPlays(groupsABC[1]);
-                List<List<string>> groupCPlays = helperClass.CreateSingleGroupPlays(groupsABC[2]);
+                List<List<string>> groupAPlays = helperGroup.CreateSingleGroupPlays(groupsABC[0]);
+                List<List<string>> groupBPlays = helperGroup.CreateSingleGroupPlays(groupsABC[1]);
+                List<List<string>> groupCPlays = helperGroup.CreateSingleGroupPlays(groupsABC[2]);
                 _groupViewModel.groupAPlays = groupAPlays;
                 _groupViewModel.groupBPlays = groupBPlays;
                 _groupViewModel.groupCPlays = groupCPlays;
+
+                //TODO
+                //fill db for tournament creation time - so that group plays would be visible  in new session
+                //fill db with group play items - so that group plays data persist in new session
             }
             return View(_groupViewModel);
         }

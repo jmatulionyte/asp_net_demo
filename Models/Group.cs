@@ -24,9 +24,6 @@ namespace Twest2.Models
         [Required]
         [DisplayName("Player 2 Result")]
         public string Player2Result { get; set; }
-
-        public DateTime TournamentCraetionDateTime { get; set; } = DateTime.Now;
-
     }
 }
 

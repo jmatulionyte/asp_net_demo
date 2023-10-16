@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Twest2.Data;
 using Twest2.Models;
+using Twest2.Helpers;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -23,14 +24,14 @@ namespace Twest2.Controllers
         // GET: /<controller>/
         public IActionResult Index(string sortOrder, string searchString)
         {
-            var helperClass = new HelperClass(_db);
+            var helperPlayer = new HelperPlayer(_db);
 
             ViewBag.WinsSortParm = sortOrder == "Wins" ? "wins_desc" : "Wins";
             ViewBag.LossesSortParm = sortOrder == "Losses" ? "losses_desc" : "Losses";
             ViewBag.EnrollmentSortParm = sortOrder == "Enrollment" ? "enrollment_desc" : "Enrollment";
             ViewBag.GroupSortParm = sortOrder == "Group" ? "group_desc" : "Group";
 
-            IEnumerable<Player> objPlayersList = helperClass.HandleAllPlayersSorting(sortOrder, searchString);
+            IEnumerable<Player> objPlayersList = helperPlayer.HandleAllPlayersSorting(sortOrder, searchString);
             return View(objPlayersList);
         }
 

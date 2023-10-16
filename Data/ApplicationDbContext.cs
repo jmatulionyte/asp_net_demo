@@ -18,6 +18,7 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
 	//creates table in DB
     public DbSet<Player> Players { get; set; }
     public DbSet<Group> Groups { get; set; }
+    public DbSet<Tournament> Tournaments { get; set; }
 
 }
 
