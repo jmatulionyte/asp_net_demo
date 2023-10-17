@@ -12,6 +12,11 @@ namespace Twest2.Helpers
             _db = db;
         }
 
+        /// <summary>
+        ///  Helps sort Players table by column, serch row by firstname/lastname
+        /// <param name="sortOrder"> string value for which column to order and either descending or ascending order
+        /// <param name="searchString"> string value for firstName/Lastname to search for in serch input field
+        /// </summary>
         public IEnumerable<Player> HandleAllPlayersSorting(string sortOrder, string searchString)
         {
             IEnumerable<Player> objPlayersList = _db.Players;

@@ -13,6 +13,10 @@ namespace Twest2.Models
             GroupName = groupName;
         }
 
+        public Group()
+        {
+        }
+
         [Key]
         public int Id { get; set; }
 
@@ -24,15 +28,20 @@ namespace Twest2.Models
         [DisplayName("Player 2")]
         public string Player2 { get; set; }
 
+        [Range(0, 4, ErrorMessage = "Result can be in range 0-4")]
         [DisplayName("Player 1 Result")]
         public int Player1Result { get; set; } = 0;
 
+        [Range(0, 4, ErrorMessage = "Result can be in range 0-4")]
         [DisplayName("Player 2 Result")]
         public int Player2Result { get; set; } = 0;
 
         [Required]
         [DisplayName("Group")]
         public string GroupName { get; set; }
+
+        [Required]
+        public string Winner { get; set; } = "";
     }
 }
 

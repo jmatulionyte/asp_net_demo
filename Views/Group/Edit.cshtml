@@ -9,12 +9,12 @@
         </div>
         <div class="mb-3">
             <label asp-for="Player1"></label>
-            <input asp-for="Player1" class="form-control" />
+            <input asp-for="Player1" class="form-control" readonly />
             <span asp-validation-for="Player1" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <label asp-for="Player2"></label>
-            <input asp-for="Player2" class="form-control" />
+            <input asp-for="Player2" class="form-control" readonly />
             <span asp-validation-for="Player2" class="text-danger"></span>
         </div>
         <div class="mb-3">
@@ -29,11 +29,11 @@
         </div>
         <div class="mb-3">
             <label asp-for="GroupName"></label>
-            <input asp-for="GroupName" class="form-control" />
+            <input asp-for="GroupName" class="form-control" readonly />
             <span asp-validation-for="GroupName" class="text-danger"></span>
         </div>
         <button type="submit" class="btn btn-primary" style="width:150px">Update Result</button>
-        <a asp-controller="Group" asp-action="Edit" class="btn btn-primary" style="width:150px">Back To List</a>
+        <a asp-controller="Group" asp-action="Index" class="btn btn-primary" style="width:150px">Back To List</a>
     </div>
 </form>
 

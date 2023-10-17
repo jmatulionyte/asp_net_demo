@@ -13,7 +13,7 @@ namespace Twest2.Helpers
         }
 
         /// <summary>
-        ///  Gets all players from DB
+        ///  Gets all players from Players DB
         ///  Returns nested List, which contains Lists for A, B, C groups and players in every group
         /// </summary>
         public List<List<string>> SortPlayersToGroups()
@@ -30,32 +30,11 @@ namespace Twest2.Helpers
         }
 
         /// <summary>
-        ///  Loop List<string> group and create plays with all players with earch other
-        ///  Return nested List, which contains Lists for every play match (player1, player2)
-        /// </summary>
-        public List<List<string>> CreateSingleGroupPlays(List<string> singleGroup)
-        {
-            List<List<string>> groupPlays = new List<List<string>>();
-            for (var i = 0; i < singleGroup.Count; i++)
-            {
-                string player = singleGroup[i]; //take player
-                List<string> singlePlayInfo = new List<string>(); //list
-                for (var j = i+1; j < singleGroup.Count; j++)//in every iterations, pair player with all other players
-                {
-                    string nextPlayer = singleGroup[j];
-                    singlePlayInfo.Add(player);
-                    singlePlayInfo.Add(nextPlayer);
-                    groupPlays.Add(singlePlayInfo); //to list add items: player1 and player2 info
-                    singlePlayInfo = new List<string>(); //nullify list
-                }
-            }
-            return groupPlays;
-        }
-
-        /// <summary>
         ///  Create group plays with 2 players and a group name
         ///  Populate Groups DB with this data for every play
         /// </summary>
+        /// <param name="singleGroup"> :List that hold every player in the group
+        /// <param name="groupName"> group name string - A, B, or C
         public void CreateSingleGroupPlaysAndUpdateDB(List<string> singleGroup, string groupName)
         {
             for (var i = 0; i < singleGroup.Count; i++)
@@ -72,7 +51,7 @@ namespace Twest2.Helpers
         }
 
         /// <summary>
-        ///  When tournament is started and group plays formed - add tournament start datetime to DB
+        ///  When tournament is started and group plays formed -> add tournament start datetime and bool true to DB
         /// </summary>
         public void UpdateTournamentDBStatusStarted()
         {
@@ -84,7 +63,7 @@ namespace Twest2.Helpers
         }
 
         /// <summary>
-        /// Checks if tournament creation data is not equal to default data and end date is default date
+        /// Checks if tournament is ongoing and group plays view need to be shown
         /// </summary>
         public bool checkIfTournamentOngoing()
         {
@@ -94,24 +73,26 @@ namespace Twest2.Helpers
         }
 
         /// <summary>
-        ///  Loop model groups A, B, C lists and add players from list to group DB
+        ///  Loop GroupViewModel model A, B, C lists and add players from list to group DB
         /// </summary>
-        public void CreateGroupDbPlays(GroupViewModel model)
+        /// GroupViewModel
+        /// <param name="groupViewModel"> Instantiated GroupViewModel class - helper class for vizualizing all views in griup page
+        public void CreateGroupDbPlays(GroupViewModel groupViewModel)
         {
             //loop groups A, B, C lists and add players from list to group DB
-            foreach (var play in model.groupAPlays)
+            foreach (var play in groupViewModel.groupAPlays)
             {
                 //add player1 and player2
                 Group groupPlaysObj = new Group(play.Player1, play.Player2, "A");
                 _db.Groups.Add(groupPlaysObj);
             }
-            foreach (var play in model.groupBPlays)
+            foreach (var play in groupViewModel.groupBPlays)
             {
                 //add player1 and player2
                 Group groupPlaysObj = new Group(play.Player1, play.Player2, "B");
                 _db.Groups.Add(groupPlaysObj);
             }
-            foreach (var play in model.groupCPlays)
+            foreach (var play in groupViewModel.groupCPlays)
             {
                 //add player1 and player2
                 Group groupPlaysObj = new Group(play.Player1, play.Player2, "C");
@@ -124,6 +105,7 @@ namespace Twest2.Helpers
         ///  Fetch all players from Players DB, sort them into 3 list for A, B, C groups
         ///  Add lists to instance of GroupViewModel class
         /// </summary>
+        /// <param name="groupViewModel"> Instantiated GroupViewModel class - helper class for vizualizing all views in griup page
         public GroupViewModel sortGroupPlaysByGroupName(GroupViewModel groupViewModel)
         {
             IEnumerable<Group> objGroupList = _db.Groups;
@@ -150,6 +132,7 @@ namespace Twest2.Helpers
         ///  Sets created tournament start date and set bool true for ongoingTournament
         ///  Populates Group DB with group Plays for all groups
         /// </summary>
+        /// <param name="groupsABC"> Nested list which hold 3 groups - A, B, C
         public void updateGroupTournamentDB(List<List<string>> groupsABC)
         {
             //set tournament creation date in databse
@@ -158,6 +141,18 @@ namespace Twest2.Helpers
             CreateSingleGroupPlaysAndUpdateDB(groupsABC[0], "A");
             CreateSingleGroupPlaysAndUpdateDB(groupsABC[1], "B");
             CreateSingleGroupPlaysAndUpdateDB(groupsABC[2], "C");
+        }
+
+        /// <summary>
+        ///  Sets created tournament start date and set bool true for ongoingTournament
+        ///  Populates Group DB with group Plays for all groups
+        /// </summary>
+        /// <param name="groupsABC"> Nested list which hold 3 groups - A, B, C
+        public string getWinnerFromGroupPlay(Group groupObj)
+        {
+            if (groupObj.Player1Result > groupObj.Player2Result) { return groupObj.Player1; }
+            else if (groupObj.Player1Result < groupObj.Player2Result) { return groupObj.Player2; }
+            return "NO WINNER";
         }
     }
 }

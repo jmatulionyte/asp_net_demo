@@ -51,29 +51,32 @@ namespace Twest2.Controllers
             {
                 return NotFound();
             }
-            var playerFromDb = _db.Players.Find(id);
+            var groupPlayObj = _db.Groups.Find(id);
 
-            if (playerFromDb == null)
+            if (groupPlayObj == null)
             {
                 return NotFound();
             }
-            return View(playerFromDb);
+            return View(groupPlayObj);
         }
 
 
         //POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Player obj)
+        public IActionResult Edit(Group groupObj)
         {
-            if (ModelState.IsValid)
+            if (groupObj.Player1Result == groupObj.Player2Result)
             {
-                _db.Players.Update(obj);
-                _db.SaveChanges();
-                TempData["success"] = "Player edited successfully";
-                return RedirectToAction("Index");
+                ModelState.AddModelError("Player1Result", "Player 1 Result cannot match Player 2 Result");
+                return View(groupObj);
             }
-            return View(obj);
+            HelperGroup helperGroup = new HelperGroup(_db);
+            groupObj.Winner = helperGroup.getWinnerFromGroupPlay(groupObj);
+            _db.Groups.Update(groupObj);
+            _db.SaveChanges();
+            TempData["success"] = "Group play edited successfully";
+            return RedirectToAction("Index");
         }
 
     }
