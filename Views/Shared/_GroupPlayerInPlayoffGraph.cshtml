@@ -1,0 +1,16 @@
+@model List<KeyValuePair<string, string>>
+
+@if (Model != null)
+{
+    string groupAndPosition = @ViewData["PositionPlaceholder"].ToString();
+    foreach (var keyValuePair in Model)
+    {
+        if (keyValuePair.Key == groupAndPosition)
+        {
+            @keyValuePair.Value
+            return;
+        }
+     }
+}
+@ViewData["PositionPlaceholder"]
+

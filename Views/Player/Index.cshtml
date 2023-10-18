@@ -13,7 +13,7 @@
         </div>
         <div class="col-6 text-end">
             <a class="btn btn-primary" asp-controller="Player" asp-action="Create">
-                <i class="bi bi-plus-circle"></i> &nbsp; Add Tournament Player
+                 Add Tournament Player
             </a>
         </div>
     </div>
@@ -53,11 +53,11 @@
                     @Html.ActionLink("Enrolled To Tournament", "Index", new { sortOrder = ViewBag.EnrollmentSortParm })
                 </th>
                 <th>
-                    @Html.ActionLink("Wins", "Index", new { sortOrder = ViewBag.WinsSortParm })
+                    @Html.ActionLink("Tournament Wins", "Index", new { sortOrder = ViewBag.TournamentWinsSortParm })
                 </th>
-                <th>
-                    @Html.ActionLink("Losses", "Index", new { sortOrder = ViewBag.LossesSortParm })
-                </th>
+                @*<th>
+                    @Html.ActionLink("Group Wins", "Index", new { sortOrder = ViewBag.GroupWinsSortParm })
+                </th>*@
                 <th>
                     @Html.ActionLink("Group", "Index", new { sortOrder = ViewBag.GroupSortParm })
                 </th>
@@ -80,13 +80,13 @@
                         @obj.EnrolledToTournament
                     </td>
                     <td>
-                        @obj.Wins
+                        @obj.TournamentWins
                     </td>
+                    @*<td>
+                        @obj.GroupWins
+                    </td>*@
                     <td>
-                        @obj.Losses
-                    </td>
-                    <td>
-                        @obj.Group
+                        @obj.GroupName
                     </td>
                     <td width="20%">
                         <div class="w-75 btn-group" role="group">

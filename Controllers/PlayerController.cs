@@ -7,6 +7,9 @@ using Microsoft.Data.SqlClient;
 using Twest2.Data;
 using Twest2.Models;
 using Twest2.Helpers;
+using System.Numerics;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Collections;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -26,8 +29,8 @@ namespace Twest2.Controllers
         {
             var helperPlayer = new HelperPlayer(_db);
 
-            ViewBag.WinsSortParm = sortOrder == "Wins" ? "wins_desc" : "Wins";
-            ViewBag.LossesSortParm = sortOrder == "Losses" ? "losses_desc" : "Losses";
+            ViewBag.TournamentWinsSortParm = sortOrder == "TournamentWins" ? "tournamentWins_desc" : "TournamentWins";
+            ViewBag.GroupWinsSortParm = sortOrder == "GroupWins" ? "groupWins_desc" : "GroupWins";
             ViewBag.EnrollmentSortParm = sortOrder == "Enrollment" ? "enrollment_desc" : "Enrollment";
             ViewBag.GroupSortParm = sortOrder == "Group" ? "group_desc" : "Group";
 

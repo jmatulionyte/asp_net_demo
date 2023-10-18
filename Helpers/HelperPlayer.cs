@@ -1,4 +1,5 @@
-﻿using Twest2.Data;
+﻿using Microsoft.AspNetCore.Mvc;
+using Twest2.Data;
 using Twest2.Models;
 
 namespace Twest2.Helpers
@@ -29,14 +30,14 @@ namespace Twest2.Helpers
 
             switch (sortOrder)
             {
-                case "Wins":
-                    objPlayersList = objPlayersList.OrderBy(s => s.Wins);
+                case "TournamentWins":
+                    objPlayersList = objPlayersList.OrderBy(s => s.TournamentWins);
                     break;
-                case "Losses":
-                    objPlayersList = objPlayersList.OrderBy(s => s.Losses);
+                case "GroupWins":
+                    objPlayersList = objPlayersList.OrderBy(s => s.GroupWins);
                     break;
-                case "losses_desc":
-                    objPlayersList = objPlayersList.OrderByDescending(s => s.Losses);
+                case "groupWins_desc":
+                    objPlayersList = objPlayersList.OrderByDescending(s => s.GroupWins);
                     break;
                 case "Enrollment":
                     objPlayersList = objPlayersList.OrderBy(s => s.EnrolledToTournament);
@@ -45,13 +46,13 @@ namespace Twest2.Helpers
                     objPlayersList = objPlayersList.OrderByDescending(s => s.EnrolledToTournament);
                     break;
                 case "Group":
-                    objPlayersList = objPlayersList.OrderBy(s => s.Group);
+                    objPlayersList = objPlayersList.OrderBy(s => s.GroupName);
                     break;
                 case "group_desc":
-                    objPlayersList = objPlayersList.OrderByDescending(s => s.Group);
+                    objPlayersList = objPlayersList.OrderByDescending(s => s.GroupName);
                     break;
                 default:
-                    objPlayersList = objPlayersList.OrderByDescending(s => s.Wins);
+                    objPlayersList = objPlayersList.OrderByDescending(s => s.TournamentWins);
                     break;
             }
             return objPlayersList;

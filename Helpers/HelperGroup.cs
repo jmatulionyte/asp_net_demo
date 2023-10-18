@@ -1,4 +1,5 @@
-﻿using Twest2.Data;
+﻿using System.Linq;
+using Twest2.Data;
 using Twest2.Models;
 
 namespace Twest2.Helpers
@@ -19,9 +20,9 @@ namespace Twest2.Helpers
         public List<List<string>> SortPlayersToGroups()
 		{
             IEnumerable<Player> objPlayersList = _db.Players;
-            List<string> GroupA = (from player in objPlayersList where player.Group == "A" & player.EnrolledToTournament.ToLower() == "yes" select player.FirstName + " " + player.LastName).ToList();
-            List<string> GroupB = (from player in objPlayersList where player.Group == "B" & player.EnrolledToTournament.ToLower() == "yes" select player.FirstName + " " + player.LastName).ToList();
-            List<string> GroupC = (from player in objPlayersList where player.Group == "C" & player.EnrolledToTournament.ToLower() == "yes" select player.FirstName + " " + player.LastName).ToList();
+            List<string> GroupA = (from player in objPlayersList where player.GroupName == "A" & player.EnrolledToTournament.ToLower() == "yes" select player.FirstName + " " + player.LastName).ToList();
+            List<string> GroupB = (from player in objPlayersList where player.GroupName == "B" & player.EnrolledToTournament.ToLower() == "yes" select player.FirstName + " " + player.LastName).ToList();
+            List<string> GroupC = (from player in objPlayersList where player.GroupName == "C" & player.EnrolledToTournament.ToLower() == "yes" select player.FirstName + " " + player.LastName).ToList();
             List<List<string>> groups = new List<List<string>>
             {
                 GroupA, GroupB, GroupC
@@ -153,6 +154,66 @@ namespace Twest2.Helpers
             if (groupObj.Player1Result > groupObj.Player2Result) { return groupObj.Player1; }
             else if (groupObj.Player1Result < groupObj.Player2Result) { return groupObj.Player2; }
             return "NO WINNER";
+        }
+
+        /// <summary>
+        ///  Updates Players table - adds groupWins result to every player
+        /// </summary>
+        public void UpdatePlayersWinsPlayerDB()
+        {
+            var playerObj = _db.Players.ToList();
+
+            //count how many wins for every player in group matches
+            List<PlayerWinCount> groupedByWinsCount = _db.Groups
+                .Where(t => t.Winner != "")
+                .GroupBy(g => g.Winner)
+                .Select(w => new PlayerWinCount
+                {
+                    player = w.Key,
+                    winCount = w.Distinct().Count()
+                }).ToList();
+
+            //loop all players in players DB and add group wins data
+
+            foreach (var player in playerObj)
+            {
+                string playerFullName = player.FirstName + " " + player.LastName;
+
+                int playerWinCount = groupedByWinsCount
+                        .Where(x => x.player == playerFullName)
+                        .Select(x => x.winCount).FirstOrDefault();
+                player.GroupWins = playerWinCount;
+                _db.Players.Update(player);
+                _db.SaveChanges();
+            }
+
+            //sort in groups players by wins -> will have 3 groups where 1st player will be having most wins
+        }
+
+        public void CreateGroupsPositioningUpdateGroupResultDB()
+        {
+            string[] groups = { "A", "B", "C" };
+            
+            foreach(var groupName in groups)
+            {//PROBLEM, WHAT IF EQUAL??
+                //filter by groupName
+                var playersInAGroup = _db.Players.Where(p => p.GroupName == groupName).ToList();
+                //sort by biggest win
+                var playersInAGroupOrderedByWinsDesc = playersInAGroup.OrderByDescending(t => t.GroupWins); //NOT ORDERING!!!!!!!
+                int positionCounter = 1;
+                foreach(var player in playersInAGroup) //problem - biggest win is biggest number, but by position it is 1
+                {
+                    GroupResult groupResultsClass = new GroupResult()
+                    {
+                        PlayerFullName = player.FirstName + " " + player.LastName,
+                        PositionInGroup = positionCounter,
+                        GroupName = groupName
+                    };
+                    _db.GroupResults.Add(groupResultsClass);
+                    _db.SaveChanges();
+                    positionCounter++;
+                }
+            }
         }
     }
 }

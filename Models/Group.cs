@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Twest2.Models
 {
-	public class Group
+    public class Group
     {
         public Group(string player1, string player2, string groupName)
         {
@@ -44,4 +44,3 @@ namespace Twest2.Models
         public string Winner { get; set; } = "";
     }
 }
-

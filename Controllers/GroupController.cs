@@ -22,6 +22,8 @@ namespace Twest2.Controllers
         public IActionResult Index(bool createGroupPlays = false)
         {
             var helperGroup = new HelperGroup(_db);
+            //ADD LOGIC - WHEN THERE IS NO PLAYERS IN PLAYERS DB, AND STILL EXIST RECORDS IN GROUPS
+            ////- GROUPS SHOULD BE DELETED - NOT SHOWN
             List<List<string>> groupsABC = helperGroup.SortPlayersToGroups();
             GroupViewModel groupViewModel = new GroupViewModel();
             groupViewModel.groupsABC = groupsABC;
@@ -39,7 +41,6 @@ namespace Twest2.Controllers
                 //get groupPlays tables
                 groupViewModel = helperGroup.sortGroupPlaysByGroupName(groupViewModel);
                 //add group plays to database
-                //helperGroup.CreateGroupDbPlays(groupViewModel);
             }
             return View(groupViewModel);
         }
@@ -77,6 +78,14 @@ namespace Twest2.Controllers
             _db.SaveChanges();
             TempData["success"] = "Group play edited successfully";
             return RedirectToAction("Index");
+        }
+
+        public IActionResult UpdatePlayersWins()
+        {
+            HelperGroup helperGroup = new HelperGroup(_db);
+            helperGroup.UpdatePlayersWinsPlayerDB();
+            helperGroup.CreateGroupsPositioningUpdateGroupResultDB();
+            return RedirectToAction("Index", "Playoff");
         }
 
     }

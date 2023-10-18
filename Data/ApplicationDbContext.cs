@@ -19,6 +19,6 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     public DbSet<Player> Players { get; set; }
     public DbSet<Group> Groups { get; set; }
     public DbSet<Tournament> Tournaments { get; set; }
-
+    public DbSet<GroupResult> GroupResults { get; set; }
 }
 
