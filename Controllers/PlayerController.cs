@@ -19,22 +19,21 @@ namespace Twest2.Controllers
     public class PlayerController : Controller
     {
         private readonly ApplicationDbContext _db;
+        private readonly HelperPlayer _helperPlayer;
 
         public PlayerController(ApplicationDbContext db)
         {
             _db = db;
+            _helperPlayer = new HelperPlayer(_db);
         }
         // GET: /<controller>/
         public IActionResult Index(string sortOrder, string searchString)
         {
-            var helperPlayer = new HelperPlayer(_db);
-
-            ViewBag.TournamentWinsSortParm = sortOrder == "TournamentWins" ? "tournamentWins_desc" : "TournamentWins";
-            ViewBag.GroupWinsSortParm = sortOrder == "GroupWins" ? "groupWins_desc" : "GroupWins";
+            ViewBag.RatingSortParm = sortOrder == "Rating" ? "rating_desc" : "Rating";
             ViewBag.EnrollmentSortParm = sortOrder == "Enrollment" ? "enrollment_desc" : "Enrollment";
             ViewBag.GroupSortParm = sortOrder == "Group" ? "group_desc" : "Group";
 
-            IEnumerable<Player> objPlayersList = helperPlayer.HandleAllPlayersSorting(sortOrder, searchString);
+            IEnumerable<Player> objPlayersList = _helperPlayer.HandleAllPlayersSorting(sortOrder, searchString);
             return View(objPlayersList);
         }
 
@@ -47,20 +46,17 @@ namespace Twest2.Controllers
         //POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Player obj)
+        public IActionResult Create(Player playerObj)
         {
-            if (obj.FirstName == obj.LastName.ToString())
-            {
-                ModelState.AddModelError("FirstName", "LastName cannot match FirstName");
-            }
+            _helperPlayer.ValidatePlayerCreation(playerObj, ModelState);
             if (ModelState.IsValid)
             {
-                _db.Players.Add(obj);
+                _db.Players.Add(playerObj);
                 _db.SaveChanges();
                 TempData["success"] = "Category created successfully";
                 return RedirectToAction("Index");
             }
-            return View(obj);
+            return View(playerObj);
         }
 
         //GET

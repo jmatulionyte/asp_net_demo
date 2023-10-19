@@ -6,6 +6,10 @@ main {
     flex-direction: row;
 }
 
+.containerCustom {
+    /*    width: 1400px;*/
+}
+
 .round {
     display: flex;
     flex-direction: column;

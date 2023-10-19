@@ -10,10 +10,13 @@ namespace Twest2.Controllers
     public class GroupController : Controller
     {
         private readonly ApplicationDbContext _db;
+        private readonly HelperGroup _helperGroup;
+
 
         public GroupController(ApplicationDbContext db)
         {
             _db = db;
+            _helperGroup = new HelperGroup(_db);
         }
 
         //all players, grup by group name and return 3 tables
@@ -21,27 +24,8 @@ namespace Twest2.Controllers
         //GET
         public IActionResult Index(bool createGroupPlays = false)
         {
-            var helperGroup = new HelperGroup(_db);
-            //ADD LOGIC - WHEN THERE IS NO PLAYERS IN PLAYERS DB, AND STILL EXIST RECORDS IN GROUPS
-            ////- GROUPS SHOULD BE DELETED - NOT SHOWN
-            List<List<string>> groupsABC = helperGroup.SortPlayersToGroups();
-            GroupViewModel groupViewModel = new GroupViewModel();
-            groupViewModel.groupsABC = groupsABC;
-            bool tournamentStartedAlready = helperGroup.checkIfTournamentOngoing();
-
-            if (createGroupPlays && !tournamentStartedAlready)
-            {
-                helperGroup.updateGroupTournamentDB(groupsABC);
-                groupViewModel.GroupPlaysStarted = true;
-                //recheck tournament status if view needs to be updated
-                tournamentStartedAlready = helperGroup.checkIfTournamentOngoing();
-            }
-            if (tournamentStartedAlready)
-            {
-                //get groupPlays tables
-                groupViewModel = helperGroup.sortGroupPlaysByGroupName(groupViewModel);
-                //add group plays to database
-            }
+            List<List<string>> groupsABC = _helperGroup.SortPlayersToGroups();
+            GroupViewModel groupViewModel = _helperGroup.AlignGroupPageView(groupsABC, createGroupPlays);
             return View(groupViewModel);
         }
 
@@ -72,21 +56,14 @@ namespace Twest2.Controllers
                 ModelState.AddModelError("Player1Result", "Player 1 Result cannot match Player 2 Result");
                 return View(groupObj);
             }
-            HelperGroup helperGroup = new HelperGroup(_db);
-            groupObj.Winner = helperGroup.getWinnerFromGroupPlay(groupObj);
+            groupObj.Winner = _helperGroup.getWinnerFromGroupPlay(groupObj);
             _db.Groups.Update(groupObj);
             _db.SaveChanges();
             TempData["success"] = "Group play edited successfully";
             return RedirectToAction("Index");
         }
 
-        public IActionResult UpdatePlayersWins()
-        {
-            HelperGroup helperGroup = new HelperGroup(_db);
-            helperGroup.UpdatePlayersWinsPlayerDB();
-            helperGroup.CreateGroupsPositioningUpdateGroupResultDB();
-            return RedirectToAction("Index", "Playoff");
-        }
+       
 
     }
 }

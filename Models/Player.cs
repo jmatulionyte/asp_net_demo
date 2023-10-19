@@ -23,16 +23,13 @@ namespace Twest2.Models
         public string EnrolledToTournament { get; set; } = "No";
 
         [Required]
-        [DisplayName("Tournament Wins")]
-        public int TournamentWins { get; set; } = 0;
+        public int Rating { get; set; } = 0;
 
         [Required]
-        [DisplayName("Group Wins")]
         public int GroupWins { get; set; } = 0;
 
-        [RegularExpression(@"^(A||B||C)$", ErrorMessage = "Group value can be either 'A', 'B' or 'C'")]
         [DisplayName("Group")]
-        public string GroupName { get; set; } = "";
+        public string GroupName { get; set; } = "C";
     }
 }
 

@@ -21,10 +21,6 @@
     <span style="color:red">
         TODO:
         <br />
-        - Validate duplicate naming,
-        <br />
-        - Describe more mothods
-        <br />
         - remove filtering (x button or smth),
         <br />
         - when tournament started, cannot make enrollment - yes.
@@ -53,11 +49,8 @@
                     @Html.ActionLink("Enrolled To Tournament", "Index", new { sortOrder = ViewBag.EnrollmentSortParm })
                 </th>
                 <th>
-                    @Html.ActionLink("Tournament Wins", "Index", new { sortOrder = ViewBag.TournamentWinsSortParm })
+                    @Html.ActionLink("Rating", "Index", new { sortOrder = ViewBag.RatingSortParm })
                 </th>
-                @*<th>
-                    @Html.ActionLink("Group Wins", "Index", new { sortOrder = ViewBag.GroupWinsSortParm })
-                </th>*@
                 <th>
                     @Html.ActionLink("Group", "Index", new { sortOrder = ViewBag.GroupSortParm })
                 </th>
@@ -80,18 +73,15 @@
                         @obj.EnrolledToTournament
                     </td>
                     <td>
-                        @obj.TournamentWins
+                        @obj.Rating
                     </td>
-                    @*<td>
-                        @obj.GroupWins
-                    </td>*@
                     <td>
                         @obj.GroupName
                     </td>
                     <td width="20%">
                         <div class="w-75 btn-group" role="group">
-                            <a class="btn btn-primary mx-2" asp-controller="Player" asp-action="Edit" asp-route-id="@obj.Id"><i class="bi bi-pen"></i> Edit</a>
-                            <a class="btn btn-danger mx-2" asp-controller="Player" asp-action="Delete" asp-route-id="@obj.Id"><i class="bi bi-file-x"></i> Delete</a>
+                            <a class="btn btn-primary mx-2" asp-controller="Player" asp-action="Edit" asp-route-id="@obj.Id">Change Enrollment</a>
+                            <a class="btn btn-danger mx-2" asp-controller="Player" asp-action="Delete" asp-route-id="@obj.Id">Delete</a>
                         </div>
                     </td>
                 </tr>

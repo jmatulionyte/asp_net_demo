@@ -52,13 +52,12 @@ namespace Twest2.Helpers
         }
 
         /// <summary>
-        ///  When tournament is started and group plays formed -> add tournament start datetime and bool true to DB
+        ///  When tournament is started and group plays formed -> add tournament ongoing bool = true to DB
         /// </summary>
         public void UpdateTournamentDBStatusStarted()
         {
-                DateTime currentDateTime = DateTime.Now;
-                //set start time and bool true, that tournament is ongoing
-                Tournament tournamentObj = new Tournament(currentDateTime, new DateTime(), true);
+                //set tournamentOngoing bool true, that tournament is ongoing
+                Tournament tournamentObj = new Tournament(true);
                 _db.Tournaments.Add(tournamentObj);
                 _db.SaveChanges();
         }
@@ -66,11 +65,22 @@ namespace Twest2.Helpers
         /// <summary>
         /// Checks if tournament is ongoing and group plays view need to be shown
         /// </summary>
-        public bool checkIfTournamentOngoing()
+        public bool CheckIfTournamentOngoing()
         {
             IEnumerable<Tournament> objTournamentList = _db.Tournaments;
             bool tournamentOngoing = objTournamentList.Any(x => x.TournamentOngoing == true);
             return tournamentOngoing;
+        }
+
+        /// <summary>
+        /// Checks if playoff is ongoing and playoff view need to be shown
+        /// </summary>
+        public bool CheckIfPlayoffOngoing()
+        {
+            IEnumerable<Tournament> objTournamentList = _db.Tournaments;
+            //there should be only 1 tournament which is ongoing
+            bool playoffOngoing = objTournamentList.Where(x => x.TournamentOngoing == true).Select(x => x.PlayoffsOngoing).SingleOrDefault();
+            return playoffOngoing;
         }
 
         /// <summary>
@@ -107,7 +117,7 @@ namespace Twest2.Helpers
         ///  Add lists to instance of GroupViewModel class
         /// </summary>
         /// <param name="groupViewModel"> Instantiated GroupViewModel class - helper class for vizualizing all views in griup page
-        public GroupViewModel sortGroupPlaysByGroupName(GroupViewModel groupViewModel)
+        public GroupViewModel SortGroupPlaysByGroupName(GroupViewModel groupViewModel)
         {
             IEnumerable<Group> objGroupList = _db.Groups;
             List<Group> GroupA = (from sigleMatch in objGroupList
@@ -134,7 +144,7 @@ namespace Twest2.Helpers
         ///  Populates Group DB with group Plays for all groups
         /// </summary>
         /// <param name="groupsABC"> Nested list which hold 3 groups - A, B, C
-        public void updateGroupTournamentDB(List<List<string>> groupsABC)
+        public void UpdateGroupTournamentDB(List<List<string>> groupsABC)
         {
             //set tournament creation date in databse
             UpdateTournamentDBStatusStarted();
@@ -157,63 +167,31 @@ namespace Twest2.Helpers
         }
 
         /// <summary>
-        ///  Updates Players table - adds groupWins result to every player
+        ///  Checks if need to display group games
         /// </summary>
-        public void UpdatePlayersWinsPlayerDB()
+        /// <param name="groupsABC"> Nested list which hold 3 groups - A, B, C
+        /// <param name="createGroupPlays"> indicates if 'start group plays' button clicked
+        public GroupViewModel AlignGroupPageView(List<List<string>>  groupsABC, bool createGroupPlays)
         {
-            var playerObj = _db.Players.ToList();
+            GroupViewModel groupViewModel = new GroupViewModel();
+            bool playoffOngoing = CheckIfPlayoffOngoing();
+            groupViewModel.PlayoffStarted = playoffOngoing;
+            groupViewModel.groupsABC = groupsABC;
+            bool tournamentStartedAlready = CheckIfTournamentOngoing();
 
-            //count how many wins for every player in group matches
-            List<PlayerWinCount> groupedByWinsCount = _db.Groups
-                .Where(t => t.Winner != "")
-                .GroupBy(g => g.Winner)
-                .Select(w => new PlayerWinCount
-                {
-                    player = w.Key,
-                    winCount = w.Distinct().Count()
-                }).ToList();
-
-            //loop all players in players DB and add group wins data
-
-            foreach (var player in playerObj)
+            if (createGroupPlays && !tournamentStartedAlready)
             {
-                string playerFullName = player.FirstName + " " + player.LastName;
-
-                int playerWinCount = groupedByWinsCount
-                        .Where(x => x.player == playerFullName)
-                        .Select(x => x.winCount).FirstOrDefault();
-                player.GroupWins = playerWinCount;
-                _db.Players.Update(player);
-                _db.SaveChanges();
+                UpdateGroupTournamentDB(groupsABC);
+                groupViewModel.GroupPlaysStarted = true;
+                //recheck tournament status if view needs to be updated
+                tournamentStartedAlready = CheckIfTournamentOngoing();
             }
-
-            //sort in groups players by wins -> will have 3 groups where 1st player will be having most wins
-        }
-
-        public void CreateGroupsPositioningUpdateGroupResultDB()
-        {
-            string[] groups = { "A", "B", "C" };
-            
-            foreach(var groupName in groups)
-            {//PROBLEM, WHAT IF EQUAL??
-                //filter by groupName
-                var playersInAGroup = _db.Players.Where(p => p.GroupName == groupName).ToList();
-                //sort by biggest win
-                var playersInAGroupOrderedByWinsDesc = playersInAGroup.OrderByDescending(t => t.GroupWins); //NOT ORDERING!!!!!!!
-                int positionCounter = 1;
-                foreach(var player in playersInAGroup) //problem - biggest win is biggest number, but by position it is 1
-                {
-                    GroupResult groupResultsClass = new GroupResult()
-                    {
-                        PlayerFullName = player.FirstName + " " + player.LastName,
-                        PositionInGroup = positionCounter,
-                        GroupName = groupName
-                    };
-                    _db.GroupResults.Add(groupResultsClass);
-                    _db.SaveChanges();
-                    positionCounter++;
-                }
+            if (tournamentStartedAlready)
+            {
+                //get groupPlays tables
+                groupViewModel = SortGroupPlaysByGroupName(groupViewModel);
             }
+            return groupViewModel;
         }
     }
 }

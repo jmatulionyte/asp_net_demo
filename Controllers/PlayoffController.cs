@@ -15,20 +15,29 @@ namespace Twest2.Controllers
     public class PlayoffController : Controller
     {
         private readonly ApplicationDbContext _db;
+        private readonly HelperPlayoff _helperPlayoff;
 
         public PlayoffController(ApplicationDbContext db)
         {
             _db = db;
+            _helperPlayoff = new HelperPlayoff(_db);
         }
         // GET: /<controller>/
         public IActionResult Index()
         {
+            _helperPlayoff.CreateUpdatePlayoffData();
             List<GroupResult> groupResultsObj = _db.GroupResults.ToList();
-            var helperPlayoff = new HelperPlayoff(_db);
-            List<KeyValuePair<string, string>> convertedGroupResults = helperPlayoff.ConvertGroupResultsDataForGraph(groupResultsObj);
+            
+            List<KeyValuePair<string, string>> convertedGroupResults = _helperPlayoff.ConvertGroupResultsDataForGraph(groupResultsObj);
             PlayoffGraphData playoffsGraphData = new PlayoffGraphData();
             playoffsGraphData.convertedGroupResults = convertedGroupResults;
             return View(playoffsGraphData);
+        }
+
+        public IActionResult EndTournament()
+        {
+            _helperPlayoff.FinalizeTournamentData();
+            return RedirectToAction("Index");
         }
     }
 }

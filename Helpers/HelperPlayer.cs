@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Twest2.Data;
 using Twest2.Models;
 
@@ -30,14 +31,8 @@ namespace Twest2.Helpers
 
             switch (sortOrder)
             {
-                case "TournamentWins":
-                    objPlayersList = objPlayersList.OrderBy(s => s.TournamentWins);
-                    break;
-                case "GroupWins":
-                    objPlayersList = objPlayersList.OrderBy(s => s.GroupWins);
-                    break;
-                case "groupWins_desc":
-                    objPlayersList = objPlayersList.OrderByDescending(s => s.GroupWins);
+                case "Rating":
+                    objPlayersList = objPlayersList.OrderBy(s => s.Rating);
                     break;
                 case "Enrollment":
                     objPlayersList = objPlayersList.OrderBy(s => s.EnrolledToTournament);
@@ -52,10 +47,30 @@ namespace Twest2.Helpers
                     objPlayersList = objPlayersList.OrderByDescending(s => s.GroupName);
                     break;
                 default:
-                    objPlayersList = objPlayersList.OrderByDescending(s => s.TournamentWins);
+                    objPlayersList = objPlayersList.OrderByDescending(s => s.Rating);
                     break;
             }
             return objPlayersList;
+        }
+
+        /// <summary>
+        /// Validate that name and surname are not equal and that player is not existant in DB
+        /// <param name="playerObj"> Player class object for creation/validation
+        /// <param name="ModelState"> ModelStateDictionary for error handling
+        /// </summary>
+        public void ValidatePlayerCreation(Player playerObj, ModelStateDictionary ModelState)
+        {
+            if (playerObj.FirstName == playerObj.LastName.ToString())
+            {
+                ModelState.AddModelError("FirstName", "LastName cannot match FirstName");
+            }
+            List<Player> playerFromDBWithSameSurname = _db.Players.
+                Where(x => x.LastName == playerObj.LastName && x.FirstName == playerObj.FirstName)
+                .Select(x => x).ToList();
+            if (playerFromDBWithSameSurname.Count() != 0)
+            {
+               ModelState.AddModelError("FirstName", "This player is already registered with same first name and last name.");
+            }
         }
     }
 }

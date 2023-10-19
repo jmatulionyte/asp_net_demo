@@ -30,12 +30,22 @@
                 </h2>
             </div>
             <div class="col-6 text-end">
-                @if (Model.GroupPlaysStarted)
+                @if (Model.PlayoffStarted)
+                {
+                <button class="btn btn-secondary" style="background-color: #D0D0D0 " disabled>
+                    Start Group Plays
+                </button>
+                <button class="btn btn-secondary" style="background-color: #D0D0D0 " disabled>
+                    Start Play-offs
+                </button>
+                }
+
+                else if (Model.GroupPlaysStarted)
                 {
                     <button class="btn btn-secondary" style="background-color: #D0D0D0 " disabled>
                         Start Group Plays
                     </button>
-                    <a class="btn btn-primary" asp-controller="Group" asp-action="UpdatePlayersWins">
+                    <a class="btn btn-primary" asp-controller="Playoff" asp-action="Index">
                         Start Play-offs
                     </a>
                 }
@@ -44,6 +54,9 @@
                     <a class="btn btn-primary" asp-controller="Group" asp-action="Index" asp-route-createGroupPlays=true>
                         <i class="bi bi-plus-circle"></i> &nbsp; Start Group Plays
                     </a>
+                    <button class="btn btn-secondary" style="background-color: #D0D0D0 " disabled>
+                        Start Play-offs
+                    </button>
                 }
 
             </div>

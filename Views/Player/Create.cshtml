@@ -17,27 +17,6 @@
             <input asp-for="LastName" class="form-control" />
             <span asp-validation-for="LastName" class="text-danger"></span>
         </div>
-        <div class="mb-3">
-            <label asp-for="TournamentWins"></label>
-            <input asp-for="TournamentWins" class="form-control" />
-            <span asp-validation-for="TournamentWins" class="text-danger"></span>
-        </div>
-        <div class="mb-3">
-            <label asp-for="GroupWins"></label>
-            <input asp-for="GroupWins" class="form-control" />
-            <span asp-validation-for="GroupWins" class="text-danger"></span>
-        </div>
-        <div class="mb-3">
-            <label asp-for="EnrolledToTournament"></label>
-            <input asp-for="EnrolledToTournament" class="form-control" />
-            <span asp-validation-for="EnrolledToTournament" class="text-danger"></span>
-        </div>
-        <div class="mb-3">
-            <label asp-for="GroupName"></label>
-            <input asp-for="GroupName" class="form-control" />
-            <span asp-validation-for="GroupName" class="text-danger"></span>
-        </div>
-
         <br />
         <button type="submit" class="btn btn-primary" style="width:150px">Create</button>
         <a asp-controller="Player" asp-action="Index" class="btn btn-primary" style="width:150px">Back To List</a>

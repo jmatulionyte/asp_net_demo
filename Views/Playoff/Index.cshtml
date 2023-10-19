@@ -9,11 +9,20 @@
     <link rel="stylesheet" href="~/css/tournamentBrackets.css" />
 </head>
 <body>
-    <div class="container">
+    <div class="container" style="font-size: 12px">
         <br />
         <br />
         <div class="container" style="width:100%">
-            <h2 class="text-primary">Play-offs</h2>
+            <div class="row pt-2">
+                <div class="col-6">
+                    <h2 class="text-primary">Play-offs</h2>
+                </div>
+                <div class="col-6 text-end">
+                    <a class="btn btn-primary" asp-controller="Playoff" asp-action="EndTournament">
+                        End Tournament
+                    </a>
+                </div>
+            </div>
             <main id="tournament">
                 <ul class="round roud1">
                     <br />
