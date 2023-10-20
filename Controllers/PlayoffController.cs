@@ -25,19 +25,26 @@ namespace Twest2.Controllers
         // GET: /<controller>/
         public IActionResult Index()
         {
-            _helperPlayoff.CreateUpdatePlayoffData();
             List<GroupResult> groupResultsObj = _db.GroupResults.ToList();
-            
             List<KeyValuePair<string, string>> convertedGroupResults = _helperPlayoff.ConvertGroupResultsDataForGraph(groupResultsObj);
+
+            //get tournament status
+            HelperTournament helperT = new HelperTournament(_db);
+            bool groupPlaysOngoing = helperT.CheckIfGroupPlaysOngoing();
+            bool playoffOngoing = helperT.CheckIfPlayoffOngoing();
             PlayoffGraphData playoffsGraphData = new PlayoffGraphData();
+
+            //assign data to playoff view
             playoffsGraphData.convertedGroupResults = convertedGroupResults;
+            playoffsGraphData.groupPlaysStarted = playoffOngoing;
+            playoffsGraphData.playoffStarted = playoffOngoing;
             return View(playoffsGraphData);
         }
 
         public IActionResult EndTournament()
         {
             _helperPlayoff.FinalizeTournamentData();
-            return RedirectToAction("Index");
+            return View("Index");
         }
     }
 }

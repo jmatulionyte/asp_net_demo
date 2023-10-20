@@ -63,8 +63,11 @@ namespace Twest2.Controllers
             return RedirectToAction("Index");
         }
 
-       
-
+        public IActionResult FinalizeGroupData()
+        {
+            _helperGroup.FinalizeGroupPlaysData();
+            return RedirectToAction("Index", "Playoff");
+        }
     }
 }
 

@@ -13,9 +13,9 @@ namespace Twest2.Helpers
 
         public List<Group> groupCPlays { get; set; }
 
-        public bool GroupPlaysStarted { get; set; }
+        public bool groupPlaysStarted { get; set; }
 
-        public bool PlayoffStarted { get; set; }
+        public bool playoffStarted { get; set; }
     }
 
     public class PlayerWinCount
@@ -29,7 +29,10 @@ namespace Twest2.Helpers
     {
         public List<KeyValuePair<string, string>> convertedGroupResults { get; set; }
 
-        //public List<KeyValuePair<string, string>> convertedGroupResults { get; set; }
+        public bool groupPlaysStarted { get; set; }
+
+        public bool playoffStarted { get; set; }
+
     }
 }
 

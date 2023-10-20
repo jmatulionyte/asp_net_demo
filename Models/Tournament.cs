@@ -6,15 +6,15 @@ namespace Twest2.Models
 {
 	public class Tournament
     {
-        public Tournament(bool tournamentOngoing)
+        public Tournament(bool groupPlaysOngoing)
         {
-            TournamentOngoing = tournamentOngoing;
+            GroupPlaysOngoing = groupPlaysOngoing;
         }
 
         [Key]
         public int Id { get; set; }
 
-        public bool TournamentOngoing { get; set; } = false;
+        public bool GroupPlaysOngoing { get; set; } = false;
 
         public bool PlayoffsOngoing { get; set; } = false;
 

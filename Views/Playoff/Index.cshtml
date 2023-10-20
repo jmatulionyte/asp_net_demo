@@ -7,6 +7,11 @@
 }
 <head>
     <link rel="stylesheet" href="~/css/tournamentBrackets.css" />
+    <style>
+        .round li {
+            padding-left: 5px;
+        }
+    </style>
 </head>
 <body>
     <div class="container" style="font-size: 12px">
@@ -17,10 +22,20 @@
                 <div class="col-6">
                     <h2 class="text-primary">Play-offs</h2>
                 </div>
+
                 <div class="col-6 text-end">
-                    <a class="btn btn-primary" asp-controller="Playoff" asp-action="EndTournament">
-                        End Tournament
-                    </a>
+                    @if (Model.playoffStarted && Model.groupPlaysStarted)
+                    {
+                        <a class="btn btn-primary" asp-controller="Playoff" asp-action="EndTournament">
+                            End Tournament
+                        </a>
+                    }
+                    else
+                    {
+                        <button class="btn btn-secondary" style="background-color: #D0D0D0 " disabled>
+                            End Tournament
+                        </button>
+                    }
                 </div>
             </div>
             <main id="tournament">

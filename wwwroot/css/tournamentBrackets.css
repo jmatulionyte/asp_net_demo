@@ -10,6 +10,12 @@ main {
     /*    width: 1400px;*/
 }
 
+.round li {
+    padding-left: 0;
+    text-indent: 0;
+    margin-left: 0;
+}
+
 .round {
     display: flex;
     flex-direction: column;

@@ -10,15 +10,11 @@
         <span style="color:red">
             TODO:
             <br />
-            - when tournament ends (there is a winner) - delete groupWins column in PlayersDB
-            <br />
             - cache database!!!!!!
             <br />
-            - add method which would stop tournamen tand hide group plays
+            - when  few players has same points in group - check how many match point has
             <br />
             - add use roles, so that only admins can start group plays, start playoffs
-            <br />
-            - might this be a p
             <br />
             - //PROBLEM, WHAT IF EQUAL matches, how positioning works then?
         </span>
@@ -30,22 +26,21 @@
                 </h2>
             </div>
             <div class="col-6 text-end">
-                @if (Model.PlayoffStarted)
-                {
+                @if (Model.playoffStarted)
+                    {
                 <button class="btn btn-secondary" style="background-color: #D0D0D0 " disabled>
                     Start Group Plays
                 </button>
                 <button class="btn btn-secondary" style="background-color: #D0D0D0 " disabled>
                     Start Play-offs
                 </button>
-                }
-
-                else if (Model.GroupPlaysStarted)
-                {
+                    }
+                    else if (Model.groupPlaysStarted)
+                    {
                     <button class="btn btn-secondary" style="background-color: #D0D0D0 " disabled>
                         Start Group Plays
                     </button>
-                    <a class="btn btn-primary" asp-controller="Playoff" asp-action="Index">
+                    <a class="btn btn-primary" asp-controller="Group" asp-action="FinalizeGroupData">
                         Start Play-offs
                     </a>
                 }

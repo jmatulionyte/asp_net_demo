@@ -6,8 +6,15 @@ namespace Twest2.Models
 {
     public class GroupResult
     {
-        public GroupResult()
+        public GroupResult(string playerFullName, string groupName, int groupWins)
         {
+            PlayerFullName = playerFullName;
+            GroupName = groupName;
+            GroupWins = groupWins;
+        }
+        public GroupResult(int positionInGroup)
+        {
+            PositionInGroup = positionInGroup;
         }
 
         [Key]
@@ -17,6 +24,8 @@ namespace Twest2.Models
 
         public string GroupName { get; set; }
 
-        public int PositionInGroup { get; set; }
+        public int PositionInGroup { get; set; } = 0;
+
+        public int GroupWins { get; set; }
     }
 }
