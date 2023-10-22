@@ -1,0 +1,321 @@
+﻿@using Twest2.Helpers
+
+@model PlayoffGraphData
+
+@{
+    ViewData["Title"] = "PlayoffGraph";
+}
+<head>
+    <link rel="stylesheet" href="~/css/tournamentBrackets.css" />
+    <style>
+        .round li {
+            padding-left: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" style="font-size: 12px">
+        <br />
+        <br />
+        <div class="container" style="width:100%">
+            <div class="row pt-2">
+                <div class="col-6">
+                    <h2 class="text-primary">Play-offs Graph</h2>
+                </div>
+
+                <div class="col-6 text-end">
+                    @if (Model.groupPlaysStarted)
+                    {
+                        <a class="btn btn-primary" asp-controller="PlayoffGraph" asp-action="EndTournament">
+                            End Tournament
+                        </a>
+                    }
+                    else
+                    {
+                        <button class="btn btn-secondary" style="background-color: #D0D0D0 " disabled>
+                            End Tournament
+                        </button>
+                    }
+                </div>
+            </div>
+            <main id="tournament">
+                <ul class="round roud1">
+                    <br />
+                    <li class="static_spacer"><p class="matchName">Match 1</p></li>
+
+                    <li class="game game-top winner">
+                        @{ ViewData["PositionPlaceholder"] = "B8";}
+                        <partial name="_GroupPlayerInPlayoffGraph" model="Model.convertedGroupResults" view-data="ViewData" />
+                        <span>84</span>
+                    </li>
+                    <li class="game game-spacer"></li>
+                    <li class="game game-bottom ">
+                        @{ ViewData["PositionPlaceholder"] = "C1";}
+                        <partial name="_GroupPlayerInPlayoffGraph" model="Model.convertedGroupResults" view-data="ViewData" /><span>72</span>
+                    </li>
+
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <li class="static_spacer_half"><p class="matchName">Match 4</p></li>
+
+                    <li class="game game-top winner">
+                        @{ ViewData["PositionPlaceholder"] = "B5";}
+                        <partial name="_GroupPlayerInPlayoffGraph" model="Model.convertedGroupResults" view-data="ViewData" />
+                        <span>84</span>
+                    </li>
+                    <li class="game game-spacer"></li>
+                    <li class="game game-bottom ">
+                        @{ ViewData["PositionPlaceholder"] = "C4";}
+                        <partial name="_GroupPlayerInPlayoffGraph" model="Model.convertedGroupResults" view-data="ViewData" />
+                        <span>72</span>
+                    </li>
+
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <li class="static_spacer_half "><p class="matchName">Match 3</p></li>
+
+                    <li class="game game-top winner">
+                        @{ ViewData["PositionPlaceholder"] = "B6";}
+                        <partial name="_GroupPlayerInPlayoffGraph" model="Model.convertedGroupResults" view-data="ViewData" />
+                        <span>64</span>
+                    </li>
+                    <li class="game game-spacer">&nbsp;</li>
+                    <li class="game game-bottom ">
+                        @{ ViewData["PositionPlaceholder"] = "C3";}
+                        <partial name="_GroupPlayerInPlayoffGraph" model="Model.convertedGroupResults" view-data="ViewData" />
+                        <span>44</span>
+                    </li>
+
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <li class="static_spacer_half"><p class="matchName">Match 2</p></li>
+
+                    <li class="game game-top winner">
+                        @{ ViewData["PositionPlaceholder"] = "B7";}
+                        <partial name="_GroupPlayerInPlayoffGraph" model="Model.convertedGroupResults" view-data="ViewData" />
+                        <span>65</span>
+                    </li>
+                    <li class="game game-spacer">&nbsp;</li>
+                    <li class="game game-bottom ">
+                        @{ ViewData["PositionPlaceholder"] = "C2";}
+                        <partial name="_GroupPlayerInPlayoffGraph" model="Model.convertedGroupResults" view-data="ViewData" />
+                        <span>54</span>
+                    </li>
+                </ul>
+                <ul class="round round2">
+                    <br />
+                    <br />
+                    <li class="static_spacer_half"><p class="matchName">Match 5</p></li>
+
+                    <li class="game game-top winner">
+                        @{ ViewData["PositionPlaceholder"] = "B1";}
+                        <partial name="_GroupPlayerInPlayoffGraph" model="Model.convertedGroupResults" view-data="ViewData" />
+                        <span>84</span>
+                    </li>
+                    <li class="game game-spacer"></li>
+                    <li class="game game-bottom ">Winner match 1 <span>72</span></li>
+
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <li class="static_spacer_half"><p class="matchName">Match 8</p></li>
+
+                    <li class="game game-top winner">
+                        @{ ViewData["PositionPlaceholder"] = "B4";}
+                        <partial name="_GroupPlayerInPlayoffGraph" model="Model.convertedGroupResults" view-data="ViewData" />
+                        <span>64</span>
+                    </li>
+                    <li class="game game-spacer">&nbsp;</li>
+                    <li class="game game-bottom ">Winner match 4 <span>44</span></li>
+
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <li class="static_spacer_half"><p class="matchName">Match 7</p></li>
+
+                    <li class="game game-top winner">
+                        @{ ViewData["PositionPlaceholder"] = "B3";}
+                        <partial name="_GroupPlayerInPlayoffGraph" model="Model.convertedGroupResults" view-data="ViewData" />
+                        <span>65</span>
+                    </li>
+                    <li class="game game-spacer">&nbsp;</li>
+                    <li class="game game-bottom ">Winner match 3 <span>54</span></li>
+
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <li class="static_spacer_half"><p class="matchName">Match 6</p></li>
+
+                    <li class="game game-top winner">
+                        @{ ViewData["PositionPlaceholder"] = "B2";}
+                        <partial name="_GroupPlayerInPlayoffGraph" model="Model.convertedGroupResults" view-data="ViewData" />
+                        <span>73</span>
+                    </li>
+                    <li class="game game-spacer">&nbsp;</li>
+                    <li class="game game-bottom ">Winner match 2 <span>61</span></li>
+
+                    <li class="static_spacer_half">&nbsp;</li>
+                </ul>
+                <ul class="round round3">
+
+                    <br />
+                    <li class="static_spacer"><p class="matchName">Match 9</p></li>
+
+                    <li class="game game-top winner">
+                        @{ ViewData["PositionPlaceholder"] = "A8";}
+                        <partial name="_GroupPlayerInPlayoffGraph" model="Model.convertedGroupResults" view-data="ViewData" />
+                        <span>84</span>
+                    </li>
+                    <li class="game game-spacer"></li>
+                    <li class="game game-bottom ">Winner of 5<span>72</span></li>
+
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <li class="static_spacer_half"><p class="matchName">Match 12</p></li>
+
+                    <li class="game game-top winner">
+                        @{ ViewData["PositionPlaceholder"] = "A5";}
+                        <partial name="_GroupPlayerInPlayoffGraph" model="Model.convertedGroupResults" view-data="ViewData" />
+                        <span>64</span>
+                    </li>
+                    <li class="game game-spacer">&nbsp;</li>
+                    <li class="game game-bottom ">Winner of 8 <span>44</span></li>
+
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <li class="static_spacer_half"><p class="matchName">Match 11</p></li>
+
+                    <li class="game game-top winner">
+                        @{ ViewData["PositionPlaceholder"] = "A6";}
+                        <partial name="_GroupPlayerInPlayoffGraph" model="Model.convertedGroupResults" view-data="ViewData" />
+                        <span>65</span>
+                    </li>
+                    <li class="game game-spacer">&nbsp;</li>
+                    <li class="game game-bottom ">Winner of 7 <span>54</span></li>
+
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <li class="static_spacer_half"><p class="matchName">Match 10</p></li>
+
+                    <li class="game game-top winner">
+                        @{ ViewData["PositionPlaceholder"] = "A7";}
+                        <partial name="_GroupPlayerInPlayoffGraph" model="Model.convertedGroupResults" view-data="ViewData" />
+                        <span>73</span>
+                    </li>
+                    <li class="game game-spacer">&nbsp;</li>
+                    <li class="game game-bottom ">Winner of 6 <span>61</span></li>
+                </ul>
+                <ul class="round round4">
+
+                    <li class="spacer"><p class="matchName">Match 13</p></li>
+
+                    <li class="game game-top winner">
+                        @{ ViewData["PositionPlaceholder"] = "A1";}
+                        <partial name="_GroupPlayerInPlayoffGraph" model="Model.convertedGroupResults" view-data="ViewData" />
+                        <span>82</span>
+                    </li>
+                    <li class="game game-spacer">&nbsp;</li>
+                    <li class="game game-bottom ">Winner of 9 <span>56</span></li>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <li class="spacer"><p class="matchName">Match 16</p></li>
+
+                    <li class="game game-top winner">
+                        @{ ViewData["PositionPlaceholder"] = "A4";}
+                        <partial name="_GroupPlayerInPlayoffGraph" model="Model.convertedGroupResults" view-data="ViewData" />
+                        <span>74</span>
+                    </li>
+                    <li class="game game-spacer">&nbsp;</li>
+                    <li class="game game-bottom ">Winner of 12 <span>57</span></li>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <li class="spacer"><p class="matchName">Match 15</p></li>
+
+                    <li class="game game-top ">
+                        @{ ViewData["PositionPlaceholder"] = "A3";}
+                        <partial name="_GroupPlayerInPlayoffGraph" model="Model.convertedGroupResults" view-data="ViewData" />
+                        <span>48</span>
+                    </li>
+                    <li class="game game-spacer">&nbsp;</li>
+                    <li class="game game-bottom winner">Winner of 11 <span>70</span></li>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <li class="spacer"><p class="matchName">Match 14</p></li>
+
+                    <li class="game game-top ">
+                        @{ ViewData["PositionPlaceholder"] = "A2";}
+                        <partial name="_GroupPlayerInPlayoffGraph" model="Model.convertedGroupResults" view-data="ViewData" />
+                        <span>50</span>
+                    </li>
+                    <li class="game game-spacer">&nbsp;</li>
+                    <li class="game game-bottom winner">Winner of 10 <span>66</span></li>
+
+                    <li class="spacer">&nbsp;</li>
+                </ul>
+                <ul class="round round5">
+                    <li class="spacer"><p class="matchName">Match 17</p></li>
+
+                    <li class="game game-top winner">Winner of 13 <span>77</span></li>
+                    <li class="game game-spacer">&nbsp;</li>
+                    <li class="game game-bottom ">Winner of 14 <span>69</span></li>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <li class="spacer"><p class="matchName">Match 18</p></li>
+
+                    <li class="game game-top ">Winner of 15 <span>61</span></li>
+                    <li class="game game-spacer">&nbsp;</li>
+                    <li class="game game-bottom winner">Winner of 16 <span>71</span></li>
+
+                    <li class="spacer">&nbsp;</li>
+                </ul>
+                <ul class="round round 6">
+                    <li class="spacer"><p class="matchName">Match 19</p></li>
+
+                    <li class="game game-top winner">Winner of 17 <span>85</span></li>
+                    <li class="game game-spacer">&nbsp;</li>
+                    <li class="game game-bottom ">Winner of 18 <span>63</span></li>
+
+                    <li class="spacer">&nbsp;</li>
+
+                </ul>
+                <ul class="round">
+                    <li class="game game-top winner">Lousville dgdfg dfgfggf<span>85</span></li>
+                </ul>
+            </main>
+
+        </div>
+    </div>
+
+</body>
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+}

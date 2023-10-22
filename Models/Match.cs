@@ -4,21 +4,25 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Twest2.Models
 {
-    public class Group
+    public class Match
     {
-        public Group(string player1, string player2, string groupName)
+        public Match(string player1, string player2, string groupName, string matchType)
         {
             Player1 = player1;
             Player2 = player2;
             GroupName = groupName;
+            MatchType = matchType;
         }
 
-        public Group()
+        public Match()
         {
         }
 
         [Key]
         public int Id { get; set; }
+
+        //Group/Playoff
+        public string MatchType { get; set; } = "Group";
 
         [Required]
         [DisplayName("Player 1")]

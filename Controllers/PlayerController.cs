@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
+﻿using Microsoft.AspNetCore.Mvc;
 using Twest2.Data;
 using Twest2.Models;
 using Twest2.Helpers;
-using System.Numerics;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.Collections;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 

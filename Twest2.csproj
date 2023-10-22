@@ -13,6 +13,7 @@
     <None Remove="Areas\Identity\Data\" />
     <None Remove="Views\Player\" />
     <None Remove="Helpers\" />
+    <None Remove="Views\PlayoffGraph\" />
     <None Remove="Views\Playoff\" />
   </ItemGroup>
   <ItemGroup>
@@ -20,6 +21,7 @@
     <Folder Include="Areas\Identity\Data\" />
     <Folder Include="Views\Player\" />
     <Folder Include="Helpers\" />
+    <Folder Include="Views\PlayoffGraph\" />
     <Folder Include="Views\Playoff\" />
   </ItemGroup>
   <ItemGroup>

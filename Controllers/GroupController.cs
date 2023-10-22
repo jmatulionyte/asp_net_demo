@@ -26,6 +26,9 @@ namespace Twest2.Controllers
         {
             List<List<string>> groupsABC = _helperGroup.SortPlayersToGroups();
             GroupViewModel groupViewModel = _helperGroup.AlignGroupPageView(groupsABC, createGroupPlays);
+            _helperGroup.UpdateGroupResultsDBWins();
+            HelperPlayoffGraph _helperPlayoffGraph = new HelperPlayoffGraph(_db);
+            _helperPlayoffGraph.CreateMatchesForPlayoffs();
             return View(groupViewModel);
         }
 
@@ -36,37 +39,31 @@ namespace Twest2.Controllers
             {
                 return NotFound();
             }
-            var groupPlayObj = _db.Groups.Find(id);
+            var matchObj = _db.Matches.Find(id);
 
-            if (groupPlayObj == null)
+            if (matchObj == null)
             {
                 return NotFound();
             }
-            return View(groupPlayObj);
+            return View(matchObj);
         }
-
 
         //POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Group groupObj)
+        public IActionResult Edit(Match matchObj)
         {
-            if (groupObj.Player1Result == groupObj.Player2Result)
+            if (matchObj.Player1Result == matchObj.Player2Result)
             {
                 ModelState.AddModelError("Player1Result", "Player 1 Result cannot match Player 2 Result");
-                return View(groupObj);
+                return View(matchObj);
             }
-            groupObj.Winner = _helperGroup.getWinnerFromGroupPlay(groupObj);
-            _db.Groups.Update(groupObj);
+            matchObj.Winner = _helperGroup.GetWinnerFromGroupPlay(matchObj);
+            _db.Matches.Update(matchObj);
             _db.SaveChanges();
             TempData["success"] = "Group play edited successfully";
+            _helperGroup.UpdateGroupResultsDBWins();
             return RedirectToAction("Index");
-        }
-
-        public IActionResult FinalizeGroupData()
-        {
-            _helperGroup.FinalizeGroupPlaysData();
-            return RedirectToAction("Index", "Playoff");
         }
     }
 }

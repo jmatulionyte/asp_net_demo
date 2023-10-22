@@ -76,6 +76,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGxheW9mZi9JbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/bg0513/Documents/personal-project/VS-project-2/Test1/Twest2/Views/PlayoffGraph/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGxheW9mZkdyYXBoL0luZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/bg0513/Documents/personal-project/VS-project-2/Test1/Twest2/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL0Vycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -96,12 +100,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19Ob3RpZmljYXRpb24uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/bg0513/Documents/personal-project/VS-project-2/Test1/Twest2/Views/Shared/_PlayoffMatchPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19QbGF5b2ZmTWF0Y2hQYXJ0aWFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/bg0513/Documents/personal-project/VS-project-2/Test1/Twest2/Views/Shared/_TableGroupPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19UYWJsZUdyb3VwUGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/bg0513/Documents/personal-project/VS-project-2/Test1/Twest2/Views/Shared/_TableGroupPlaysPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19UYWJsZUdyb3VwUGxheXNQYXJ0aWFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/bg0513/Documents/personal-project/VS-project-2/Test1/Twest2/Views/Shared/_TablePlayoffsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19UYWJsZVBsYXlvZmZzUGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/bg0513/Documents/personal-project/VS-project-2/Test1/Twest2/Views/Shared/_ValidationScriptsPartial.cshtml]
