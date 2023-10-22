@@ -3,7 +3,14 @@ using Twest2.Models;
 
 namespace Twest2.Helpers
 {
-	public class GroupViewModel
+    public class PlayerViewModel
+    {
+        public IEnumerable<Player> objPlayersList { get; set; }
+
+        public bool groupPlaysStarted { get; set; }
+    }
+
+    public class GroupViewModel
 	{
         public List<List<string>> groupsABC { get; set; }
 

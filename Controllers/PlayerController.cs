@@ -25,8 +25,18 @@ namespace Twest2.Controllers
             ViewBag.EnrollmentSortParm = sortOrder == "Enrollment" ? "enrollment_desc" : "Enrollment";
             ViewBag.GroupSortParm = sortOrder == "Group" ? "group_desc" : "Group";
 
+            //get all players
             IEnumerable<Player> objPlayersList = _helperPlayer.HandleAllPlayersSorting(sortOrder, searchString);
-            return View(objPlayersList);
+
+            //check if tournament started
+            HelperTournament _helperT = new HelperTournament(_db);
+            //chech if group plays started
+            bool groupPlaysStarted = _helperT.CheckIfGroupPlaysOngoing();
+
+            PlayerViewModel viewModel = new PlayerViewModel();
+            viewModel.objPlayersList = objPlayersList;
+            viewModel.groupPlaysStarted = groupPlaysStarted;
+            return View(viewModel);
         }
 
         //GET

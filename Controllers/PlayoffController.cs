@@ -18,14 +18,45 @@ namespace Twest2.Controllers
 
         public IActionResult Index()
         {
-
-            //List<PlayoffMatch> allMatch = _helperPlayoffGraph.CreateMatchesForPlayoffs1_4();
-            //check if already craeted 20 playoff matches
-            _helperPlayoffGraph.CreateMatchesForPlayoffs();
-            //this.User -> saved during login operation
-            //return View(allMatch);
+            bool tournamentStarted = _db.Tournaments.ToList()
+                .Select(x => x.GroupPlaysOngoing).SingleOrDefault();
+            //return playoff matches if tournament started
+            if(tournamentStarted)
+            {
+                //get playoff matches from DB
+                List<Match> playoffMatches = _helperPlayoffGraph.GetMatchesForPlayoffs();
+                return View(playoffMatches);
+            }
+            //If playoff matches not already ctreated and added to DB - create them
             return View();
+        }
 
+        //GET
+        public IActionResult Edit(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var matchFromDB = _db.Matches.Find(id);
+
+            if (matchFromDB == null)
+            {
+                return NotFound();
+            }
+            return View(matchFromDB);
+        }
+
+
+        //POST
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(Match obj)
+        {
+            _db.Matches.Update(obj);
+            _db.SaveChanges();
+            TempData["success"] = "Playoff match edited successfully";
+            return RedirectToAction("Index");
         }
     }
 }

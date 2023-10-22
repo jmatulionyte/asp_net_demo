@@ -1,17 +1,7 @@
-﻿@using Twest2.Helpers
-
-@*@model List<PlayoffMatch>*@
+﻿@model List<Match>
 @{
     ViewData["Title"] = "Playoff";
 }
-<head>
-    <link rel="stylesheet" href="~/css/tournamentBrackets.css" />
-    <style>
-        .round li {
-            padding-left: 5px;
-        }
-    </style>
-</head>
 <body>
     <div class="container">
         <br />
@@ -21,19 +11,19 @@
                 <div class="col-6">
                     <h2 class="text-primary">Play-offs Matches</h2>
                 </div>
-
+                <span style="color:red">
+                    TODO:
+                    <br />
+                    - disable edit result buttin when there is no real players
+                    <br />
+                </span>
                 <div class="col-6 text-end">
                 </div>
             </div>
-            @*@{ ViewData["GroupName"] = "B8C1";}
-            <partial name="_TablePlayoffsPartial" model="Model" view-data="ViewData" />
-            @{ ViewData["GroupName"] = "B5C4";}
-            <partial name="_TablePlayoffsPartial" model="Model" view-data="ViewData" />
-            @{ ViewData["GroupName"] = "B6C3";}
-            <partial name="_TablePlayoffsPartial" model="Model" view-data="ViewData" />
-            @{ ViewData["GroupName"] = "B7C2";}
-            <partial name="_TablePlayoffsPartial" model="Model" view-data="ViewData" />*@
-
+            @if (Model != null)
+            {
+                <partial name="_TablePlayoffsPlaysPartial" model="Model" />
+            }
         </div>
     </div>
 

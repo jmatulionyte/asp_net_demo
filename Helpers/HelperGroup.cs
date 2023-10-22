@@ -129,21 +129,21 @@ namespace Twest2.Helpers
             
             HelperTournament _helperT = new HelperTournament(_db);
             //chech if group plays started
-            bool tournamentStartedAlready = _helperT.CheckIfGroupPlaysOngoing();
+            bool groupPlaysStarted = _helperT.CheckIfGroupPlaysOngoing();
             
             GroupViewModel groupViewModel = new GroupViewModel();
             groupViewModel.groupsABC = groupsABC;
 
             //considering tournament status, show specific types of views in 'group plays' page
-            if (createGroupPlays && !tournamentStartedAlready)
+            if (createGroupPlays && !groupPlaysStarted)
             {
                 //update tournament status as - already started
                 UpdateGroupDBTournamentDB(groupsABC);
                 groupViewModel.groupPlaysStarted = true;
                 //recheck tournament status if view needs to be updated
-                tournamentStartedAlready = _helperT.CheckIfGroupPlaysOngoing();
+                groupPlaysStarted = _helperT.CheckIfGroupPlaysOngoing();
             }
-            if (tournamentStartedAlready)
+            if (groupPlaysStarted)
             {
                 //get groupPlays tables
                 groupViewModel = SortGroupPlaysByGroupName(groupViewModel);
@@ -230,20 +230,21 @@ namespace Twest2.Helpers
         }
 
         /// <summary>
-        ///  Get GroupResults data, order desc and assign position 1 -> x
+        ///  Get GroupResults data, order desc and assign positions to players
         /// </summary>
         private void AssignPlaceInGroup(string groupName)
         {
             var groupResults = _db.GroupResults.Where(p => p.GroupName == groupName).ToList();
             var groupResultsOrderedByWinsDesc = groupResults.OrderByDescending(t => t.GroupWins).Select(t => t).ToList();
             int positionCounter = 0;
+            bool noMatchesPlayedInGroup = groupResultsOrderedByWinsDesc.Where(x => x.GroupWins == 0).Count() == groupResultsOrderedByWinsDesc.Count();
             foreach (var groupResult in groupResultsOrderedByWinsDesc) //error - loop all group, should be only one
             {
                 //if after sorting all players in group
                 //and expecting biggest score at the top and biggest score - 0
-                //means bno matches were played in the group
+                //means no matches were played in the group
                 //setting zero position to all players in group
-                if (groupResult.GroupWins == 0) 
+                if (noMatchesPlayedInGroup) 
                 {
                     groupResult.PositionInGroup = 0;
                 }

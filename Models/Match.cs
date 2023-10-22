@@ -22,7 +22,7 @@ namespace Twest2.Models
         public int Id { get; set; }
 
         //Group/Playoff
-        public string MatchType { get; set; } = "Group";
+        public string MatchType { get; set; }
 
         [Required]
         [DisplayName("Player 1")]

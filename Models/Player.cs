@@ -26,7 +26,7 @@ namespace Twest2.Models
         public int Rating { get; set; } = 0;
 
         [DisplayName("Group")]
-        public string GroupName { get; set; } = "C";
+        public string GroupName { get; set; }
     }
 }
 

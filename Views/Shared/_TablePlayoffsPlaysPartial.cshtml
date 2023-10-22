@@ -1,0 +1,54 @@
+@model List<Match>
+
+@if (Model.Count != 0)
+{
+    <table class="table table-striped bg-dark" style="width:50%; margin: 0 20px 0 0; border: 0 0 0 0">
+        <thead>
+            <tr>
+                <th>
+                    Nr
+                </th>
+                <th>
+                    Player 1
+                </th>
+                <th>
+                    Player 2
+                </th>
+                <th>
+                    Result
+                </th>
+                <th>
+
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int counter = 1;
+            }
+            @foreach (var groupPlayer in Model)
+            {
+                <tr>
+                    <td>
+                        @counter
+                    </td>
+                    <td>
+                        @groupPlayer.Player1
+                    </td>
+                    <td>
+                        @groupPlayer.Player2
+                    </td>
+                    <td>
+                        @groupPlayer.Player1Result : @groupPlayer.Player2Result
+                    </td>
+                    <td>
+                        <a class="btn btn-primary mx-2" asp-controller="Playoff" asp-action="Edit" asp-route-id="@groupPlayer.Id">
+                            Edit Result
+                        </a>
+                    </td>
+                </tr>
+                counter++;
+            }
+        </tbody>
+    </table>
+}

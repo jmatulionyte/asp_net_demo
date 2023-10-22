@@ -21,9 +21,9 @@ namespace Twest2.Helpers
         /// </summary>
         public IEnumerable<Player> HandleAllPlayersSorting(string sortOrder, string searchString)
         {
-            IEnumerable<Player> objPlayersList = _db.Players;
+            IEnumerable<Player> objPlayersList = _db.Players.ToList();
 
-            if (!String.IsNullOrEmpty(searchString))
+            if (!string.IsNullOrEmpty(searchString))
             {
                 objPlayersList = objPlayersList.Where(s => s.LastName.Contains(searchString)
                                        || s.FirstName.Contains(searchString));

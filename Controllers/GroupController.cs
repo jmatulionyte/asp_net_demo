@@ -26,9 +26,6 @@ namespace Twest2.Controllers
         {
             List<List<string>> groupsABC = _helperGroup.SortPlayersToGroups();
             GroupViewModel groupViewModel = _helperGroup.AlignGroupPageView(groupsABC, createGroupPlays);
-            _helperGroup.UpdateGroupResultsDBWins();
-            HelperPlayoffGraph _helperPlayoffGraph = new HelperPlayoffGraph(_db);
-            _helperPlayoffGraph.CreateMatchesForPlayoffs();
             return View(groupViewModel);
         }
 
@@ -58,11 +55,14 @@ namespace Twest2.Controllers
                 ModelState.AddModelError("Player1Result", "Player 1 Result cannot match Player 2 Result");
                 return View(matchObj);
             }
-            matchObj.Winner = _helperGroup.GetWinnerFromGroupPlay(matchObj);
+            matchObj.Winner = _helperGroup.GetWinnerFromMatch(matchObj);
             _db.Matches.Update(matchObj);
             _db.SaveChanges();
             TempData["success"] = "Group play edited successfully";
+            //After every update of match - update Results DB and Playoff Matches
             _helperGroup.UpdateGroupResultsDBWins();
+            HelperPlayoffGraph _helperPlayoffGraph = new HelperPlayoffGraph(_db);
+            _helperPlayoffGraph.CreateOrUpdateMatchesForPlayoffs();
             return RedirectToAction("Index");
         }
     }

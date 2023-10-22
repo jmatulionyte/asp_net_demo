@@ -25,20 +25,20 @@ namespace Twest2.Helpers
 
         public List<string[]> playoffMatchesTemplate = new List<string[]>
         {
-        new string[3]{ "1", "B8", "C6"},
+        new string[3]{ "1", "B8", "C1"},
         new string[3]{ "2", "B7", "C2"},
         new string[3]{ "3", "B6", "C3" },
         new string[3]{ "4", "B5", "C4" },
 
         new string[3]{ "5", "B1", "Winner of 1" },
-        new string[3]{ "6", "B2", "winner of 2" },
+        new string[3]{ "6", "B2", "Winner of 2" },
         new string[3]{ "7", "B3", "Winner of 3" },
         new string[3]{ "8", "B4", "Winner of 4" },
 
         new string[3]{ "9", "A8", "Winner of 5" },
         new string[3]{ "10", "A7", "Winner of 6" },
-        new string[3]{ "11", "B6", "Winner of 7" },
-        new string[3]{ "12", "B5", "Winner of 8" },
+        new string[3]{ "11", "A6", "Winner of 7" },
+        new string[3]{ "12", "A5", "Winner of 8" },
 
         new string[3]{ "13", "A1", "Winner of 9" },
         new string[3]{ "14", "A2", "Winner of 10" },
@@ -60,10 +60,6 @@ namespace Twest2.Helpers
             
             //class object to store player full name and position (e.g. A7) and use them in graph
             List<KeyValuePair<string, string>> playerPositionGraph = new List<KeyValuePair<string, string>>();
-            //if (groupResultsObj.Count == 0)
-            //{
-            //    return playerPositionGraph;
-            //}
                 foreach (var groupResult in groupResultsObj)
             {
                 KeyValuePair<string, string> playerResults = new KeyValuePair<string, string>
@@ -77,25 +73,45 @@ namespace Twest2.Helpers
         }
 
         /// <summary>
-        ///  Create playoff matches and saves to Mathes DB IF they are not already cl
+        ///  Create playoff matches and saves to Mathes DB IF they are not already created
         /// </summary>
-        public void CreateMatchesForPlayoffs()
+        public void CreateOrUpdateMatchesForPlayoffs()
         {
             bool playoffMatchesAlreadyInDB = checkIf20PlayoffMatchesCreatedInDB();
-            if(!playoffMatchesAlreadyInDB)
+
+            foreach (var match in playoffMatchesTemplate)
             {
-                foreach (var match in playoffMatchesTemplate)
+                string matchNumber = match[0]; //get match number e.g. 1
+                string player1FullName = ValidatePlayersNameForPlayoffs(match[1]);
+                string player2FullName = ValidatePlayersNameForPlayoffs(match[2]);
+                Match matchesObj = new Match(player1FullName, player2FullName, matchNumber, "Playoff");
+                if (!playoffMatchesAlreadyInDB)
                 {
-                    string matchNumber = match[0]; //get match number e.g. 1
-                    string player1FullName = ValidatePlayersNameForPlayoffs(match[1]);
-                    string player2FullName = ValidatePlayersNameForPlayoffs(match[2]);
-                    Match matchesObj = new Match(player1FullName, player2FullName, matchNumber, "Playoff");
                     _db.Matches.Add(matchesObj);
                 }
-                _db.SaveChanges();
+                else
+                {
+                    Match? specificMatch = _db.Matches.ToList().Where(x => x.GroupName == matchNumber).Single();
+                    specificMatch.Player1 = player1FullName;
+                    specificMatch.Player2 = player2FullName;
+                    _db.Matches.Update(specificMatch);
+                }
             }
+            _db.SaveChanges();
         }
 
+        /// <summary>
+        ///  Create playoff matches and saves to Mathes DB IF they are not already created
+        /// </summary>
+        public List<Match> GetMatchesForPlayoffs()
+        {
+            List<Match> playoffMatchesObj = _db.Matches.Where(x => x.MatchType == "Playoff").ToList();
+            return playoffMatchesObj;
+        }
+
+        /// <summary>
+        /// Checks if player name is in positioning list, if not, assigns default positioning (e.g. A7)
+        /// </summary>
         private string ValidatePlayersNameForPlayoffs (string playerPositioning)
         {
             string playerPositioningInGroup = playerPositioning;
@@ -108,6 +124,7 @@ namespace Twest2.Helpers
             }
             return playerFullName;
         }
+
         /// <summary>
         /// Checks if 20 playoff matches is already added to Matches DB
         /// </summary>
@@ -151,9 +168,6 @@ namespace Twest2.Helpers
             //delete groupWins in players db column
 
             //enable buttons where needed
-
-
-
 
             //update scores in player table - points - rating
         }
