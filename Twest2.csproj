@@ -14,7 +14,7 @@
     <None Remove="Views\Player\" />
     <None Remove="Helpers\" />
     <None Remove="Views\PlayoffGraph\" />
-    <None Remove="Views\Playoff\" />
+    <None Remove="Views\PlayoffMatch\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
@@ -22,7 +22,7 @@
     <Folder Include="Views\Player\" />
     <Folder Include="Helpers\" />
     <Folder Include="Views\PlayoffGraph\" />
-    <Folder Include="Views\Playoff\" />
+    <Folder Include="Views\PlayoffMatch\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.11" />

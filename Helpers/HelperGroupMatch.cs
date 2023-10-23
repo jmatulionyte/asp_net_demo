@@ -1,15 +1,13 @@
-﻿using System.Linq;
-using System.Numerics;
-using Twest2.Data;
+﻿using Twest2.Data;
 using Twest2.Models;
 
 namespace Twest2.Helpers
 {
-	public class HelperGroup
+	public class HelperGroupMatch
 	{
         private readonly ApplicationDbContext _db;
 
-        public HelperGroup(ApplicationDbContext db)
+        public HelperGroupMatch(ApplicationDbContext db)
         {
             _db = db;
         }
@@ -109,24 +107,12 @@ namespace Twest2.Helpers
         }
 
         /// <summary>
-        ///  Checks group match, compares results and returns winner player string
-        /// </summary>
-        /// <param name="groupObj"> Group class object
-        public string GetWinnerFromGroupPlay(Match groupObj)
-        {
-            if (groupObj.Player1Result > groupObj.Player2Result) { return groupObj.Player1; }
-            else if (groupObj.Player1Result < groupObj.Player2Result) { return groupObj.Player2; }
-            return "NO WINNER";
-        }
-
-        /// <summary>
         ///  Checks if need to display group games
         /// </summary>
         /// <param name="groupsABC"> Nested list which hold 3 groups - A, B, C
         /// <param name="createGroupPlays"> indicates if 'start group plays' button clicked
-        public GroupViewModel AlignGroupPageView(List<List<string>>  groupsABC, bool createGroupPlays)
+        public GroupViewModel AlignGroupMatchesPageView(List<List<string>>  groupsABC, bool createGroupPlays)
         {
-            
             HelperTournament _helperT = new HelperTournament(_db);
             //chech if group plays started
             bool groupPlaysStarted = _helperT.CheckIfGroupPlaysOngoing();
@@ -156,7 +142,6 @@ namespace Twest2.Helpers
         /// </summary>
         private List<PlayerWinCount> GetPlayersWinsInGroupMatches()
         {
-            //
             List<PlayerWinCount> groupedByWinsCount = _db.Matches
                 .Where(t => t.Winner != "")
                 .GroupBy(g => g.Winner)

@@ -16,30 +16,30 @@ namespace Twest2.Controllers
     {
         private readonly ApplicationDbContext _db;
         private readonly HelperPlayoffGraph _helperPlayoffGraph;
+        private readonly HelperPlayoffMatch _helperPlayoffMatch;
 
         public PlayoffGraphController(ApplicationDbContext db)
         {
             _db = db;
+            _helperPlayoffMatch = new HelperPlayoffMatch(_db);
             _helperPlayoffGraph = new HelperPlayoffGraph(_db);
         }
         // GET: /<controller>/
         public IActionResult Index()
         {
-            List<KeyValuePair<string, string>> convertedGroupResults = _helperPlayoffGraph.ConvertGroupResultsDataForPlayoffs();
+            Dictionary<int, Match> playoffMatchesForGraph = _helperPlayoffGraph.ConvertPlayoffMatchesDataForGraph();
 
             //get tournament status
             HelperTournament helperT = new HelperTournament(_db);
             bool groupPlaysOngoing = helperT.CheckIfGroupPlaysOngoing();
-            bool playoffOngoing = helperT.CheckIfPlayoffOngoing();
             PlayoffGraphData playoffsGraphData = new PlayoffGraphData();
 
+            //get playoff matches from DB
+            //List<Match> playoffMatches = _helperPlayoffMatch.GetMatchesForPlayoffs();
+
             //assign data to playoff view
-            playoffsGraphData.convertedGroupResults = convertedGroupResults;
+            playoffsGraphData.playoffMatchesForGraph = playoffMatchesForGraph;
             playoffsGraphData.groupPlaysStarted = groupPlaysOngoing;
-            playoffsGraphData.playoffStarted = playoffOngoing;
-
-            
-
 
             return View(playoffsGraphData);
         }

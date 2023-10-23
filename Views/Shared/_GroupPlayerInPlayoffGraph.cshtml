@@ -1,18 +1,30 @@
-@model List<KeyValuePair<string, string>>
+@model List<Dictionary<string, Match>>
+
+    <head>
+        <link rel="stylesheet" href="~/css/tournamentBrackets.css" />
+        <style>
+            .round li {
+                padding-left: 5px;
+            }
+        </style>
+    </head>
 
 @if (Model != null)
 {
-    string groupAndPosition = @ViewData["PositionPlaceholder"].ToString();
-    foreach (var keyValuePair in Model)
+    @*string groupAndPosition = @ViewData["PositionPlaceholder"].ToString();
+
+   foreach (var keyValuePair in Model)
     {
         if (keyValuePair.Key == groupAndPosition)
         {
-            @*<li class="game game-top winner">*@
-                @keyValuePair.Value
-                @*<span>84</span>*@
-            @*</li>*@
-            return;
+    <li class="game game-top winner">
+    keyValuePair.Value
+    <span>84</span>
+    </li>
+   return;
         }
-    }
+    }*@
+
 }
+
 @ViewData["PositionPlaceholder"]

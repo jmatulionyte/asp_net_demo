@@ -46,7 +46,7 @@ main {
 
 .static_spacer_half{
     padding: 15%;
-/*    display: table-cell;*/
+    display: table-cell;
     vertical-align: middle;
     text-align: center;
 }

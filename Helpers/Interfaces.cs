@@ -32,25 +32,22 @@ namespace Twest2.Helpers
 
     public class PlayoffGraphData
     {
-        public List<KeyValuePair<string, string>> convertedGroupResults { get; set; }
+        public Dictionary<int, Match> playoffMatchesForGraph { get; set; }
 
         public bool groupPlaysStarted { get; set; }
-
-        public bool playoffStarted { get; set; }
-
     }
 
     public class PlayoffMatch
     { //A7, name
-        //publi
         public KeyValuePair<string, string> player1Data { get; set; }
+
         public KeyValuePair<string, string> player2Data { get; set; }
+
         public int matchNumber { get; set; }
     }
 
     public class PlayoffMatches
     {
-
         public List<PlayoffMatch> playoffMatches1_4 { get; set; }
         public List<PlayoffMatch> playoffMatches5_8 { get; set; }
         public List<PlayoffMatch> playoffMatches9_12 { get; set; }

@@ -5,15 +5,15 @@ using Twest2.Helpers;
 
 namespace Twest2.Controllers
 {
-	public class PlayoffController: Controller
+	public class PlayoffMatchController : Controller
 	{
         private readonly ApplicationDbContext _db;
-        private readonly HelperPlayoffGraph _helperPlayoffGraph;
+        private readonly HelperPlayoffMatch _helperPlayoffMatch;
 
-        public PlayoffController(ApplicationDbContext db)
+        public PlayoffMatchController(ApplicationDbContext db)
         {
             _db = db;
-            _helperPlayoffGraph = new HelperPlayoffGraph(_db);
+            _helperPlayoffMatch = new HelperPlayoffMatch(_db);
         }
 
         public IActionResult Index()
@@ -24,7 +24,7 @@ namespace Twest2.Controllers
             if(tournamentStarted)
             {
                 //get playoff matches from DB
-                List<Match> playoffMatches = _helperPlayoffGraph.GetMatchesForPlayoffs();
+                List<Match> playoffMatches = _helperPlayoffMatch.GetMatchesForPlayoffs();
                 return View(playoffMatches);
             }
             //If playoff matches not already ctreated and added to DB - create them
@@ -47,13 +47,14 @@ namespace Twest2.Controllers
             return View(matchFromDB);
         }
 
-
         //POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Match obj)
+        public IActionResult Edit(Match matchObj)
         {
-            _db.Matches.Update(obj);
+            HelperMatch _helperMatch = new HelperMatch(_db);
+            matchObj.Winner = _helperMatch.GetWinnerFromMatch(matchObj);
+            _db.Matches.Update(matchObj);
             _db.SaveChanges();
             TempData["success"] = "Playoff match edited successfully";
             return RedirectToAction("Index");

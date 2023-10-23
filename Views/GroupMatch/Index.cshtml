@@ -3,7 +3,7 @@
 @model GroupViewModel
 
 @{
-    ViewData["Title"] = "Group";
+    ViewData["Title"] = "Group Matches";
 }
 <body>
     <div class="container">
@@ -36,22 +36,19 @@
                     }
                  else
                     {
-                        <a class="btn btn-primary" asp-controller="Group" asp-action="Index" asp-route-createGroupPlays=true>
+                        <a class="btn btn-primary" asp-controller="GroupMatch" asp-action="Index" asp-route-createGroupPlays=true>
                             <i class="bi bi-plus-circle"></i> &nbsp; Start Group Plays
                         </a>
                     }
-
             </div>
             <br />
             <br />
-
             @{ ViewData["GroupName"] = "A";}
             <partial name="_TableGroupPartial" model="Model.groupsABC[0]" view-data="ViewData" />
             @{ ViewData["GroupName"] = "B";}
             <partial name="_TableGroupPartial" model="Model.groupsABC[1]" view-data="ViewData" />
             @{ ViewData["GroupName"] = "C";}
             <partial name="_TableGroupPartial" model="Model.groupsABC[2]" view-data="ViewData" />
-
         </div>
         <br />
         <br />
@@ -71,7 +68,6 @@
                 <partial name="_TableGroupPlaysPartial" model="Model.groupCPlays" view-data="ViewData" />
             </div>
         }
-
     </div>
 </body>
 

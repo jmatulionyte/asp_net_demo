@@ -1,11 +1,14 @@
 ﻿@model Match
-<form method="post" asp-controller="Playoff" asp-action="Edit">
+@{
+    ViewData["Title"] = "Edit Group Match";
+}
+<form method="post" asp-action="Edit">
     @*need to pass this hidden id field for deletion *@
     <input asp-for="MatchType" hidden />
     <div class="border p-3 mt-4">
         <div class="row pb-2">
             <h2 class="text-primary">
-                Edit Playoff Match Result
+                Edit Group Match Result
             </h2>
             <hr />
         </div>
@@ -35,7 +38,7 @@
             <span asp-validation-for="GroupName" class="text-danger"></span>
         </div>
         <button type="submit" class="btn btn-primary" style="width:150px">Update Result</button>
-        <a asp-controller="Playoff" asp-action="Index" class="btn btn-primary" style="width:150px">Back To List</a>
+        <a asp-controller="GroupMatch" asp-action="Index" class="btn btn-primary" style="width:150px">Back To List</a>
     </div>
 </form>
 

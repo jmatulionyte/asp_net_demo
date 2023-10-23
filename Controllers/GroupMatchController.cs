@@ -7,16 +7,16 @@ using Twest2.Helpers;
 
 namespace Twest2.Controllers
 {
-    public class GroupController : Controller
+    public class GroupMatchController : Controller
     {
         private readonly ApplicationDbContext _db;
-        private readonly HelperGroup _helperGroup;
+        private readonly HelperGroupMatch _helperGroup;
 
 
-        public GroupController(ApplicationDbContext db)
+        public GroupMatchController(ApplicationDbContext db)
         {
             _db = db;
-            _helperGroup = new HelperGroup(_db);
+            _helperGroup = new HelperGroupMatch(_db);
         }
 
         //all players, grup by group name and return 3 tables
@@ -25,7 +25,7 @@ namespace Twest2.Controllers
         public IActionResult Index(bool createGroupPlays = false)
         {
             List<List<string>> groupsABC = _helperGroup.SortPlayersToGroups();
-            GroupViewModel groupViewModel = _helperGroup.AlignGroupPageView(groupsABC, createGroupPlays);
+            GroupViewModel groupViewModel = _helperGroup.AlignGroupMatchesPageView(groupsABC, createGroupPlays);
             return View(groupViewModel);
         }
 
@@ -55,14 +55,15 @@ namespace Twest2.Controllers
                 ModelState.AddModelError("Player1Result", "Player 1 Result cannot match Player 2 Result");
                 return View(matchObj);
             }
-            matchObj.Winner = _helperGroup.GetWinnerFromMatch(matchObj);
+            HelperMatch _helperMatch = new HelperMatch(_db);
+            matchObj.Winner = _helperMatch.GetWinnerFromMatch(matchObj);
             _db.Matches.Update(matchObj);
             _db.SaveChanges();
             TempData["success"] = "Group play edited successfully";
             //After every update of match - update Results DB and Playoff Matches
             _helperGroup.UpdateGroupResultsDBWins();
-            HelperPlayoffGraph _helperPlayoffGraph = new HelperPlayoffGraph(_db);
-            _helperPlayoffGraph.CreateOrUpdateMatchesForPlayoffs();
+            HelperPlayoffMatch _helperPlayoff = new HelperPlayoffMatch(_db);
+            _helperPlayoff.CreateOrUpdateMatchesForPlayoffs();
             return RedirectToAction("Index");
         }
     }
