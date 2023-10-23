@@ -6,11 +6,19 @@ namespace Twest2.Models
 {
     public class Match
     {
-        public Match(string player1, string player2, string groupName, string matchType)
+        public Match(string player1, string player2, string groupName, string matchType) //for group play
         {
             Player1 = player1;
             Player2 = player2;
             GroupName = groupName;
+            MatchType = matchType;
+        }
+
+        public Match(string player1, string player2, int matchNr, string matchType) //for match play
+        {
+            Player1 = player1;
+            Player2 = player2;
+            MatchNr = matchNr;
             MatchType = matchType;
         }
 
@@ -40,9 +48,10 @@ namespace Twest2.Models
         [DisplayName("Player 2 Result")]
         public int Player2Result { get; set; } = 0;
 
-        [Required]
         [DisplayName("Group")]
-        public string GroupName { get; set; }
+        public string GroupName { get; set; } = "-";
+
+        public int MatchNr { get; set; } = 0;
 
         [Required]
         public string Winner { get; set; } = "";

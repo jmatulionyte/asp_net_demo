@@ -6,9 +6,24 @@
 
 @if (Model != null)
     {
-        <li class="@ViewData["SpacerType"].ToString()"><p class="matchName">Match @Model.GroupName </p></li>
+    <li class="@ViewData["SpacerType"].ToString()"><p class="matchName">Match @Model.MatchNr </p></li>
 
+    @if (@Model.Player1Result > @Model.Player2Result)
+    {
+        <li class="game game-top winner" style="padding-left: 5px">@Model.Player1<span>@Model.Player1Result</span></li>
+        <li class="game game-spacer">&nbsp;</li>
+        <li class="game game-bottom" style="padding-left: 5px">@Model.Player2<span>@Model.Player2Result</span></li>
+    }
+    else if (@Model.Player1Result < @Model.Player2Result)
+    {
+        <li class="game game-top" style="padding-left: 5px">@Model.Player1<span>@Model.Player1Result</span></li>
+        <li class="game game-spacer">&nbsp;</li>
+        <li class="game game-bottom winner" style="padding-left: 5px">@Model.Player2<span>@Model.Player2Result</span></li>
+    }
+    else
+    {
         <li class="game game-top" style="padding-left: 5px">@Model.Player1<span>@Model.Player1Result</span></li>
         <li class="game game-spacer">&nbsp;</li>
         <li class="game game-bottom" style="padding-left: 5px">@Model.Player2<span>@Model.Player2Result</span></li>
     }
+}

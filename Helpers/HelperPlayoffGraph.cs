@@ -47,7 +47,7 @@ namespace Twest2.Helpers
             Dictionary<int, Match> playoffMatchesByMatchNr = new();
             foreach (var match in playoffMatches)
             {
-                playoffMatchesByMatchNr[int.Parse(match.GroupName)] = match;
+                playoffMatchesByMatchNr[match.MatchNr] = match;
             }
             return playoffMatchesByMatchNr;
         }

@@ -54,17 +54,17 @@ namespace Twest2.Helpers
 
             foreach (var match in playoffMatchesTemplate)
             {
-                string matchNumber = match[0]; //get match number e.g. 1
+                int matchNumber = int.Parse(match[0]); //get match number e.g. 1
                 string player1FullName = ValidatePlayersNameForPlayoffs(match[1]);
                 string player2FullName = ValidatePlayersNameForPlayoffs(match[2]);
-                Match matchesObj = new Match(player1FullName, player2FullName, matchNumber, "Playoff");
+                Match matchesObj = new(player1FullName, player2FullName, matchNumber, "Playoff");
                 if (!playoffMatchesAlreadyInDB)
                 {
                     _db.Matches.Add(matchesObj);
                 }
                 else
                 {
-                    Match? specificMatch = _db.Matches.ToList().Where(x => x.GroupName == matchNumber).Single();
+                    Match specificMatch = _db.Matches.ToList().Where(x => x.MatchNr == matchNumber).Single();
                     specificMatch.Player1 = player1FullName;
                     specificMatch.Player2 = player2FullName;
                     _db.Matches.Update(specificMatch);
@@ -73,6 +73,28 @@ namespace Twest2.Helpers
             _db.SaveChanges();
         }
 
+        /// <summary>
+        /// For Playoff Games, check if there are winners in matches between real players
+        /// Winner would be assigned as a player for other match in a playoff
+        /// </summary>
+        public void GetWinnerOfMatchUpdateMatchDB()
+        {
+            List<Match> allPlayoffMatches = GetMatchesForPlayoffs();
+
+            foreach(var match in allPlayoffMatches)
+            {   //chech if there matches with winners
+                if(match.Winner != null)
+                {
+                    string matchNumber = match.MatchNr.ToString();
+                    //find match where would need to fill in winners name
+                    var matchToSetWinnerFor = allPlayoffMatches
+                        .Where(x => x.Player2.Contains(matchNumber) == true).
+                        Select(x => x).ToList();
+                    matchToSetWinnerFor[0].Player2 = match.Winner;
+                    //_db.Matches.Update(matchToSetWinnerFor[0]);
+                }
+            }
+        }
         /// <summary>
         ///  Create playoff matches and saves to Mathes DB IF they are not already created
         /// </summary>

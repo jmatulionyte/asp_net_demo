@@ -9,19 +9,21 @@ namespace Twest2.Controllers
 	{
         private readonly ApplicationDbContext _db;
         private readonly HelperPlayoffMatch _helperPlayoffMatch;
+        private readonly HelperTournament _helperTournament;
+
 
         public PlayoffMatchController(ApplicationDbContext db)
         {
             _db = db;
             _helperPlayoffMatch = new HelperPlayoffMatch(_db);
+            _helperTournament = new HelperTournament(_db);
         }
 
         public IActionResult Index()
         {
-            bool tournamentStarted = _db.Tournaments.ToList()
-                .Select(x => x.GroupPlaysOngoing).SingleOrDefault();
+            bool tournamentStarted = _helperTournament.CheckIfGroupPlaysOngoing();
             //return playoff matches if tournament started
-            if(tournamentStarted)
+            if (tournamentStarted)
             {
                 //get playoff matches from DB
                 List<Match> playoffMatches = _helperPlayoffMatch.GetMatchesForPlayoffs();
@@ -56,6 +58,7 @@ namespace Twest2.Controllers
             matchObj.Winner = _helperMatch.GetWinnerFromMatch(matchObj);
             _db.Matches.Update(matchObj);
             _db.SaveChanges();
+            _helperPlayoffMatch.GetWinnerOfMatchUpdateMatchDB();
             TempData["success"] = "Playoff match edited successfully";
             return RedirectToAction("Index");
         }

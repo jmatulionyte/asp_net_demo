@@ -42,9 +42,20 @@
                         @groupPlayer.Player1Result : @groupPlayer.Player2Result
                     </td>
                     <td>
+                        @if (@groupPlayer.Player1.Length == 2 || @groupPlayer.Player2.Length == 2
+                        || @groupPlayer.Player1.Contains(" of ") || @groupPlayer.Player2.Contains(" of "))
+                        {
+                        <button class="btn btn-secondary mx-2" style="background-color: #D0D0D0 " disabled>
+                            Edit Result
+                        </button>
+                        }
+                        else
+                        {
                         <a class="btn btn-primary mx-2" asp-controller="PlayoffMatch" asp-action="Edit" asp-route-id="@groupPlayer.Id">
                             Edit Result
                         </a>
+                        }
+
                     </td>
                 </tr>
                 counter++;

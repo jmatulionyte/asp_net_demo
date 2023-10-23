@@ -34,9 +34,6 @@ namespace Twest2.Controllers
             bool groupPlaysOngoing = helperT.CheckIfGroupPlaysOngoing();
             PlayoffGraphData playoffsGraphData = new PlayoffGraphData();
 
-            //get playoff matches from DB
-            //List<Match> playoffMatches = _helperPlayoffMatch.GetMatchesForPlayoffs();
-
             //assign data to playoff view
             playoffsGraphData.playoffMatchesForGraph = playoffMatchesForGraph;
             playoffsGraphData.groupPlaysStarted = groupPlaysOngoing;

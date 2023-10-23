@@ -179,7 +179,7 @@ namespace Twest2.Helpers
                 foreach (var player in playersInGroup)
                 {
                     //set data to groupResults DB
-                    SetPlayerWinsToGroupDB(player, groupedByWinsCount, groupName);
+                    SetPlayerWinsToMatchDB(player, groupedByWinsCount, groupName);
                 }
                 _db.SaveChanges();
                 AssignPlaceInGroup(groupName);
@@ -189,7 +189,7 @@ namespace Twest2.Helpers
         /// <summary>
         /// Check if player is already in GroupResults table and adds his wins score or updates it
         /// </summary>
-        private void SetPlayerWinsToGroupDB(Player player, List<PlayerWinCount> groupedByWinsCount, string groupName)
+        private void SetPlayerWinsToMatchDB(Player player, List<PlayerWinCount> groupedByWinsCount, string groupName)
         {
             string playerFullName = player.FirstName + " " + player.LastName;
             //Find how many group matches specific player won

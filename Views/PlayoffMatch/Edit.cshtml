@@ -5,6 +5,7 @@
 <form method="post" asp-action="Edit">
     @*need to pass this hidden id field for deletion *@
     <input asp-for="MatchType" hidden />
+    <input asp-for="MatchNr" hidden />
     <div class="border p-3 mt-4">
         <div class="row pb-2">
             <h2 class="text-primary">
@@ -31,11 +32,6 @@
             <label asp-for="Player2Result"></label>
             <input asp-for="Player2Result" class="form-control" />
             <span asp-validation-for="Player2Result" class="text-danger"></span>
-        </div>
-        <div class="mb-3">
-            <label asp-for="GroupName"></label>
-            <input asp-for="GroupName" class="form-control" readonly />
-            <span asp-validation-for="GroupName" class="text-danger"></span>
         </div>
         <button type="submit" class="btn btn-primary" style="width:150px">Update Result</button>
         <a asp-controller="Playoff" asp-action="Index" class="btn btn-primary" style="width:150px">Back To List</a>
